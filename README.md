@@ -12,10 +12,10 @@
 
 - Clone repos
 - Run admin and client folder invidually
-- Download modules: *npm install
-- Build: *npm start
+- Download modules: _npm install_
+- Build: _npm start_
 
 
 ## III. Checkout website
 
-- *This is website's url
+- _This is website's url_
