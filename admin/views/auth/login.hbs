@@ -1,2 +1,29 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<form action='/login' method='POST' class='auth_form' id='login_form'>
+	<div style='text-align: center;'>
+		<i class='fa-solid fa-door-open' style='font-size: 50px;width:initial'></i>
+		<br />
+		<h2>Welcome to SneakerJeeps</h2>
+	</div>
+	<i class='fa-solid fa-user'></i>
+	<input
+		type='email'
+		id='login_username'
+		name='username'
+		placeholder='Username'
+		class='auth_input'
+	/>
+	<br />
+	<i class='fa-solid fa-lock'></i>
+	<input
+		type='password'
+		id='login_password'
+		name='password'
+		placeholder='Password'
+		class='auth_input'
+	/>
+	<br />
+	<p style='color: red;display:none' id='login_error'>Invalid input</p>
+	<input type='submit' value='LOGIN' id='login_submit' class='auth_submit' />
+	<p>Don't have an account? <a href='/signup'>SIGN UP</a></p>
+</form>
+<script src='/javascripts/auth.js'></script>

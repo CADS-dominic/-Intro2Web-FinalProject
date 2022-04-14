@@ -1,0 +1,125 @@
+.auth_form {
+  background-color: rgba(0, 0, 0, 0.226);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 20vh auto;
+  padding: 50px 25px;
+  color: white;
+}
+
+.auth_form i {
+  width: 10%;
+}
+
+.auth_form .auth_input {
+  background-color: #00000000;
+  outline: none;
+  border: none;
+  border-bottom: 1px white solid;
+  margin: 10px 0;
+  color: white;
+  width: 85%;
+}
+
+.auth_form .auth_input:focus::-webkit-input-placeholder {
+  color: transparent;
+  opacity: 1;
+}
+
+.auth_form .auth_input:focus:-ms-input-placeholder {
+  color: transparent;
+  opacity: 1;
+}
+
+.auth_form .auth_input:focus::-ms-input-placeholder {
+  color: transparent;
+  opacity: 1;
+}
+
+.auth_form .auth_input:focus::placeholder {
+  color: transparent;
+  opacity: 1;
+}
+
+.auth_form .auth_input:focus:-ms-input-placeholder {
+  color: transparent;
+}
+
+.auth_form .auth_input:focus::-ms-input-placeholder {
+  color: transparent;
+}
+
+.auth_form .auth_submit {
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+  background-color: rgba(230, 0, 230, 0.788);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 0;
+  margin-top: 10px;
+}
+
+.auth_form .auth_submit:hover {
+  -webkit-box-shadow: rgba(255, 255, 255, 0.521) 0px 7px 29px 0px;
+          box-shadow: rgba(255, 255, 255, 0.521) 0px 7px 29px 0px;
+  font-size: 18px;
+}
+
+.auth_form p {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 11px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+}
+
+.auth_form a {
+  text-decoration: none;
+  color: white;
+}
+
+.auth_form a:hover {
+  color: magenta;
+}
+
+.auth_form ::-webkit-input-placeholder {
+  color: #707070;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.auth_form :-ms-input-placeholder {
+  color: #707070;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.auth_form ::-ms-input-placeholder {
+  color: #707070;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.auth_form ::placeholder {
+  color: #707070;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.auth_form :-ms-input-placeholder {
+  color: #707070;
+  font-size: 14px;
+}
+
+.auth_form ::-ms-input-placeholder {
+  color: #707070;
+  font-size: 14px;
+}
+/*# sourceMappingURL=auth.css.map */

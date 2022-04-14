@@ -1,0 +1,85 @@
+.auth_form {
+	background-color: rgba(0, 0, 0, 0.226);
+	width: fit-content;
+	height: fit-content;
+	margin: 20vh auto;
+	padding: 50px 25px;
+	color: white;
+
+	i{
+		width: 10%;
+	}
+
+	.auth_input{
+		background-color: #00000000;
+		outline: none;
+		border: none;
+		border-bottom: 1px white solid;
+		margin: 10px 0;
+		color: white;
+		width: 85%;
+
+		&:focus{
+			&::placeholder {
+				color: transparent;
+				opacity: 1; 
+			}
+			  
+			&:-ms-input-placeholder { 
+				color: transparent;
+			}
+			  
+			&::-ms-input-placeholder {
+				color: transparent;
+			}
+		}
+	}
+
+	.auth_submit{
+		width: stretch;
+		background-color: rgba(230, 0, 230, 0.788);
+		border: none;
+		color: white;
+		border-radius: 10px;
+		padding: 5px 0;
+		margin-top: 10px;
+
+		&:hover {
+			box-shadow: rgba(255, 255, 255, 0.521) 0px 7px 29px 0px;
+			font-size: 18px;
+		}
+	}
+
+	p{
+		margin-top: 10px;
+		text-align: center;
+		font-size: 11px;
+		width: stretch;
+	}
+
+	a{
+		text-decoration: none;
+		color: white;
+
+		&:hover{
+			color: rgb(255, 0, 255);
+		}
+	}
+
+	::placeholder {
+		color: rgb(112, 112, 112);
+		opacity: 1; 
+		font-size: 14px;
+	}
+	  
+	:-ms-input-placeholder { 
+		color: rgb(112, 112, 112);
+		font-size: 14px;
+	}
+	  
+	::-ms-input-placeholder {
+		color: rgb(112, 112, 112);
+		font-size: 14px;
+	}
+}
+
