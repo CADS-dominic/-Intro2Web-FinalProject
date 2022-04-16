@@ -1,16 +1,16 @@
 .auth_form {
 	background-color: rgba(0, 0, 0, 0.226);
-	width:400px;
+	width: 400px;
 	height: 60vh;
 	margin: 20vh auto;
 	padding: 50px 25px;
 	color: white;
 
-	i{
+	i {
 		width: 10%;
 	}
 
-	.auth_input{
+	.auth_input {
 		background-color: #00000000;
 		outline: none;
 		border: none;
@@ -19,28 +19,28 @@
 		color: white;
 		width: 85%;
 
-		&:focus{
+		&:focus {
 			&::placeholder {
 				color: transparent;
-				opacity: 1; 
+				opacity: 1;
 			}
-			  
-			&:-ms-input-placeholder { 
+
+			&:-ms-input-placeholder {
 				color: transparent;
 			}
-			  
+
 			&::-ms-input-placeholder {
 				color: transparent;
 			}
 		}
 	}
 
-	.auth_error{
+	.auth_error {
 		color: red !important;
 		border-bottom: 1px red solid !important;
 	}
 
-	.auth_submit{
+	.auth_submit {
 		width: stretch;
 		background-color: rgba(230, 0, 230, 0.788);
 		border: none;
@@ -56,37 +56,75 @@
 		}
 	}
 
-	p{
+	p {
 		margin-top: 10px;
 		text-align: center;
 		font-size: 11px;
 		width: stretch;
 	}
 
-	a{
+	a {
 		text-decoration: none;
 		color: white;
 		cursor: pointer;
-		
-		&:hover{
+
+		&:hover {
 			color: rgb(255, 0, 255);
 		}
 	}
 
 	::placeholder {
 		color: rgb(112, 112, 112);
-		opacity: 1; 
+		opacity: 1;
 		font-size: 14px;
 	}
-	  
-	:-ms-input-placeholder { 
+
+	:-ms-input-placeholder {
 		color: rgb(112, 112, 112);
 		font-size: 14px;
 	}
-	  
+
 	::-ms-input-placeholder {
 		color: rgb(112, 112, 112);
 		font-size: 14px;
 	}
 }
 
+.lds-ring {
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+
+	div {
+		box-sizing: border-box;
+		display: block;
+		position: absolute;
+		width: 64px;
+		height: 64px;
+		margin: 8px;
+		border: 8px solid #fff;
+		border-radius: 50%;
+		animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+		border-color: #fff transparent transparent transparent;
+	}
+
+	div:nth-child(1) {
+		animation-delay: -0.35s;
+	}
+	div:nth-child(2) {
+		animation-delay: -0.2s;
+	}
+	div:nth-child(3) {
+		animation-delay: -0.15s;
+	}
+}
+
+@keyframes lds-ring {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

@@ -3,19 +3,20 @@ var router = express.Router()
 var bcrypt = require('bcrypt')
 const passport = require('passport')
 
-router.get('/', function (req, res) {
+router.get('/', passport.checkNotAuth, function (req, res) {
 	res.render('auth/login')
 })
 
 router.post(
 	'/login',
+	passport.checkNotAuth,
 	passport.authenticate('local', {
 		successRedirect: '/admin',
 		failureRedirect: '/',
 	})
 )
 
-router.get('/logout', function (req, res) {
+router.get('/logout', passport.checkAuth, function (req, res) {
 	req.logout()
 	res.redirect('/')
 })

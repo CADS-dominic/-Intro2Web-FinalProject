@@ -6,7 +6,7 @@ var { adminCollection } = require('../../db')
 
 passport.use(
 	new LocalStrategy({ usernameField: 'username' }, async function verify(username, password, done) {
-		await adminCollection.findOne({ username: username, activate: true }).then((data) => {
+		await adminCollection.findOne({ username: username, verified: true }).then((data) => {
 			if (data == null) {
 				return done(null, false, { error: true })
 			} else {
@@ -37,6 +37,14 @@ passport.checkAuth = (req, res, next) => {
 		next()
 	} else {
 		res.redirect('/')
+	}
+}
+
+passport.checkNotAuth = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		next()
+	} else {
+		res.redirect('/admin')
 	}
 }
 
