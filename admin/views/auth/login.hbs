@@ -1,4 +1,4 @@
-<form action='/login' method='POST' class='auth_form' id='login_form'>
+<form action='/login' method='post' class='auth_form'>
 	<div style='text-align: center;'>
 		<i class='fa-solid fa-door-open' style='font-size: 50px;width:initial'></i>
 		<br />
@@ -22,8 +22,10 @@
 		class='auth_input'
 	/>
 	<br />
-	<p style='color: red;display:none' id='login_error'>Invalid input</p>
+	<a
+		style='text-align: right;display:block;font-size:10px'
+		href='/forgot'
+	>Forgot your password?</a>
 	<input type='submit' value='LOGIN' id='login_submit' class='auth_submit' />
 	<p>Don't have an account? <a href='/signup'>SIGN UP</a></p>
 </form>
-<script src='/javascripts/auth.js'></script>

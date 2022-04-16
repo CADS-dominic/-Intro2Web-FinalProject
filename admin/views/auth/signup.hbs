@@ -1,73 +1,39 @@
-<form action='' class='auth_form'>
+<form class='auth_form' id='signup_form'>
 	<div style='text-align: center;'>
-		<i
-			class='fa-solid fa-arrow-right-to-bracket'
-			style='font-size:50px;width:initial'
-		></i>
+		<i class='fa-solid fa-arrow-right-to-bracket' style='font-size:50px;width:initial'></i>
 		<br />
 		<h2>JOIN US NOW</h2>
 	</div>
-	<div style='display: flex;'>
-		<div>
-			<i class='fa-solid fa-user'></i>
-			<input
-				type='email'
-				id='signup_username'
-				name='username'
-				placeholder='Username'
-				class='auth_input'
-			/>
-			<br />
-			<i class='fa-solid fa-lock'></i>
-			<input
-				type='password'
-				id='signup_password'
-				name='password'
-				placeholder='Password'
-				class='auth_input'
-			/>
-			<br />
-			<i class='fa-solid fa-key'></i>
-			<input
-				type='password'
-				id='signup_repassword'
-				name='repassword'
-				placeholder='Re-enter password'
-				class='auth_input'
-			/>
-			<br />
-		</div>
-		<div>
-			<i class='fa-solid fa-signature'></i>
-			<input
-				type='text'
-				id='signup_name'
-				name='name'
-				placeholder='Name'
-				class='auth_input'
-			/>
-			<br />
-			<i class='fa-solid fa-location-dot'></i>
-			<input
-				type='text'
-				id='signup_address'
-				name='address'
-				placeholder='Address'
-				class='auth_input'
-			/>
-			<br />
-			<i class='fa-regular fa-image'></i>
-			<input
-				type='text'
-				id='signup_ava'
-				name='ava'
-				placeholder="Avatar's URL"
-				class='auth_input'
-			/>
-			<br />
-		</div>
+	<div>
+		<i class='fa-solid fa-user' id='signup_usernameIcon' style='border-bottom:none !important'></i>
+		<input type='email' id='signup_username' name='username' placeholder='Username' class='auth_input' />
+		<br />
+		<i class='fa-solid fa-lock' id='signup_passwordIcon' style='border-bottom:none !important'></i>
+		<input type='password' id='signup_password' name='password' placeholder='Password' class='auth_input' />
+		<br />
+		<i class='fa-solid fa-key' id='signup_repasswordIcon' style='border-bottom:none !important'></i>
+		<input
+			type='password'
+			id='signup_repassword'
+			name='repassword'
+			placeholder='Re-enter password'
+			class='auth_input'
+		/>
+		<br />
+		<i class='fa-regular fa-image' id='signup_avaIcon' style='border-bottom:none !important'></i>
+		<input type='text' id='signup_ava' name='ava' placeholder="Avatar's URL" class='auth_input' />
+		<br />
 	</div>
+	<p style='color: red;display:none;text-shadow:1px 1px black,1px 1px black' id='signup_usernameError'>Username has
+		already existed. You can't submit</p>
+	<p style='color: red;display:none;text-shadow:1px 1px black,1px 1px black' id='signup_passwordError'>Password is too
+		weak. You can't submit</p>
+	<p style='color: red;display:none;text-shadow:1px 1px black,1px 1px black' id='signup_repasswordError'>Password
+		doesn't match. You can't submit</p>
+	<p style='color: red;display:none;text-shadow:1px 1px black,1px 1px black' id='signup_avaError'>Avatar's URL is
+		invalid. You can't submit</p>
+	<p style='color: red;display:none;text-shadow:1px 1px black,1px 1px black' id='signup_error'>Invalid input</p>
 	<input type='submit' value='SIGNUP' id='signup_submit' class='auth_submit' />
-	<p>Go back to <a href='/'>LOGIN</a> </p>
-
+	<p>Go back to <a href='/'>LOGIN</a></p>
 </form>
+<script src='/javascripts/auth.js'></script>

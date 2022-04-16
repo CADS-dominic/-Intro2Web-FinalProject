@@ -1,7 +1,7 @@
 .auth_form {
 	background-color: rgba(0, 0, 0, 0.226);
-	width: fit-content;
-	height: fit-content;
+	width:400px;
+	height: 60vh;
 	margin: 20vh auto;
 	padding: 50px 25px;
 	color: white;
@@ -35,6 +35,11 @@
 		}
 	}
 
+	.auth_error{
+		color: red !important;
+		border-bottom: 1px red solid !important;
+	}
+
 	.auth_submit{
 		width: stretch;
 		background-color: rgba(230, 0, 230, 0.788);
@@ -47,6 +52,7 @@
 		&:hover {
 			box-shadow: rgba(255, 255, 255, 0.521) 0px 7px 29px 0px;
 			font-size: 18px;
+			cursor: pointer;
 		}
 	}
 
@@ -60,7 +66,8 @@
 	a{
 		text-decoration: none;
 		color: white;
-
+		cursor: pointer;
+		
 		&:hover{
 			color: rgb(255, 0, 255);
 		}

@@ -1,26 +1,23 @@
 var express = require('express')
 var router = express.Router()
-var { adminCollection } = require('../../db')
+var bcrypt = require('bcrypt')
+const passport = require('passport')
 
 router.get('/', function (req, res) {
 	res.render('auth/login')
 })
 
-router.post('/login', async (req, res) => {
-	let adminList = []
-	const { username, password } = req.body
-	console.log(username, password)
-	await adminCollection
-		.find({ username: username, password: password })
-		.forEach((doc) => {
-			adminList.push(doc)
-		})
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/admin',
+		failureRedirect: '/',
+	})
+)
 
-	if (adminList.length == 0) {
-		res.send({ error: true })
-	} else {
-		res.send({ error: false })
-	}
+router.get('/logout', function (req, res) {
+	req.logout()
+	res.redirect('/')
 })
 
 module.exports = router

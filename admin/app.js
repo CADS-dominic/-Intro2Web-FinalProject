@@ -3,9 +3,14 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+var session = require('express-session')
+var passport = require('passport')
+require('dotenv').config()
+require('./routes/auth/passport')
 
 var loginRouter = require('./routes/auth/login')
 var signupRouter = require('./routes/auth/signup')
+var forgotRouter = require('./routes/auth/forgot')
 var adminRouter = require('./routes/admin/admin')
 
 var app = express()
@@ -19,9 +24,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+	session({
+		secret: process.env.PASSPORT_KEY || '19127426',
+		resave: false,
+		saveUninitialized: false,
+	})
+)
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', loginRouter)
 app.use('/signup', signupRouter)
+app.use('/forgot', forgotRouter)
 app.use('/admin', adminRouter)
 
 // catch 404 and forward to error handler
