@@ -1,0 +1,154 @@
+.admin_container {
+	display: grid;
+	grid-template-columns: 25% 75%;
+	min-height: 100vh;
+	max-height: 100vh;
+
+	.sidebar {
+		background-color: rgb(194, 0, 194);
+		color: white;
+		text-align: center;
+
+		hr {
+			background-image: linear-gradient(
+				to right,
+				rgba(255, 255, 255, 0),
+				rgba(255, 255, 255, 0.75),
+				rgba(255, 255, 255, 0)
+			);
+		}
+
+		img {
+			width: 50%;
+			height: auto;
+			border-radius: 50%;
+			margin: 10px 0;
+		}
+
+		nav {
+			text-align: left;
+
+			.sidebar_item {
+				padding: 10px 0;
+
+				a {
+					text-decoration: none;
+					color: white;
+					cursor: pointer;
+					display: inline-block;
+					width: 65%;
+				}
+
+				i {
+					width: 15%;
+					text-align: center;
+
+					&:hover {
+						cursor: pointer;
+					}
+				}
+
+				.sidebar_subitem {
+					display: none;
+
+					a {
+						display: block;
+						padding: 5px 17%;
+						font-size: 10px;
+						width: 100%;
+					}
+				}
+
+				&:hover {
+					color: rgb(255, 0, 255);
+					background-color: purple;
+
+					a {
+						color: rgb(255, 0, 255);
+					}
+
+					.sidebar_subitem {
+						display: block;
+
+						a:hover {
+							background-color: rgb(65, 0, 65);
+							color: white;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.admin_body {
+		background-color: rgb(255, 255, 255);
+		padding: 5vh 5vw;
+
+		.admin_profileContainer {
+			.admin_form {
+				display: flex;
+				flex-direction: column;
+				padding: 10px 10%;
+
+				input {
+					margin-bottom: 10px;
+					outline: none;
+					padding: 5px 5px;
+				}
+
+				button {
+					background-color: rgb(255, 0, 255);
+					border: none;
+					color: white;
+					padding: 5px 10px;
+					border-radius: 15px;
+
+					&:hover {
+						cursor: pointer;
+						box-shadow: rgba(129, 129, 129, 0.7) 0px 5px 5px 0px;
+					}
+				}
+			}
+		}
+
+		.admin_accountContainer {
+			.account_list {
+				margin-top: 50px;
+				background-color: whitesmoke;
+				padding: 10px 10px;
+
+				.account_item {
+					display: grid;
+					grid-template-columns: 20% 50% 20% 10%;
+					margin: 10px 0;
+
+					img {
+						width: 50px;
+						border-radius: 50%;
+					}
+
+					p,
+					a {
+						align-self: center;
+					}
+				}
+			}
+
+			.paginContainer {
+				text-align: center;
+				margin-top: 10px;
+
+				button {
+					background-color: white;
+					border: none;
+					color: rgb(255, 0, 255);
+					width: 20px;
+
+					&:hover {
+						cursor: pointer;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,159 @@
+.admin_container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 25% 75%;
+      grid-template-columns: 25% 75%;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.admin_container .sidebar {
+  background-color: #c200c2;
+  color: white;
+  text-align: center;
+}
+
+.admin_container .sidebar hr {
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(rgba(255, 255, 255, 0.75)), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+}
+
+.admin_container .sidebar img {
+  width: 50%;
+  height: auto;
+  border-radius: 50%;
+  margin: 10px 0;
+}
+
+.admin_container .sidebar nav {
+  text-align: left;
+}
+
+.admin_container .sidebar nav .sidebar_item {
+  padding: 10px 0;
+}
+
+.admin_container .sidebar nav .sidebar_item a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  width: 65%;
+}
+
+.admin_container .sidebar nav .sidebar_item i {
+  width: 15%;
+  text-align: center;
+}
+
+.admin_container .sidebar nav .sidebar_item i:hover {
+  cursor: pointer;
+}
+
+.admin_container .sidebar nav .sidebar_item .sidebar_subitem {
+  display: none;
+}
+
+.admin_container .sidebar nav .sidebar_item .sidebar_subitem a {
+  display: block;
+  padding: 5px 17%;
+  font-size: 10px;
+  width: 100%;
+}
+
+.admin_container .sidebar nav .sidebar_item:hover {
+  color: magenta;
+  background-color: purple;
+}
+
+.admin_container .sidebar nav .sidebar_item:hover a {
+  color: magenta;
+}
+
+.admin_container .sidebar nav .sidebar_item:hover .sidebar_subitem {
+  display: block;
+}
+
+.admin_container .sidebar nav .sidebar_item:hover .sidebar_subitem a:hover {
+  background-color: #410041;
+  color: white;
+}
+
+.admin_container .admin_body {
+  background-color: white;
+  padding: 5vh 5vw;
+}
+
+.admin_container .admin_body .admin_profileContainer .admin_form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 10px 10%;
+}
+
+.admin_container .admin_body .admin_profileContainer .admin_form input {
+  margin-bottom: 10px;
+  outline: none;
+  padding: 5px 5px;
+}
+
+.admin_container .admin_body .admin_profileContainer .admin_form button {
+  background-color: magenta;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+.admin_container .admin_body .admin_profileContainer .admin_form button:hover {
+  cursor: pointer;
+  -webkit-box-shadow: rgba(129, 129, 129, 0.7) 0px 5px 5px 0px;
+          box-shadow: rgba(129, 129, 129, 0.7) 0px 5px 5px 0px;
+}
+
+.admin_container .admin_body .admin_accountContainer .account_list {
+  margin-top: 50px;
+  background-color: whitesmoke;
+  padding: 10px 10px;
+}
+
+.admin_container .admin_body .admin_accountContainer .account_list .account_item {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20% 50% 20% 10%;
+      grid-template-columns: 20% 50% 20% 10%;
+  margin: 10px 0;
+}
+
+.admin_container .admin_body .admin_accountContainer .account_list .account_item img {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.admin_container .admin_body .admin_accountContainer .account_list .account_item p,
+.admin_container .admin_body .admin_accountContainer .account_list .account_item a {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.admin_container .admin_body .admin_accountContainer .paginContainer {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.admin_container .admin_body .admin_accountContainer .paginContainer button {
+  background-color: white;
+  border: none;
+  color: magenta;
+  width: 20px;
+}
+
+.admin_container .admin_body .admin_accountContainer .paginContainer button:hover {
+  cursor: pointer;
+}
+/*# sourceMappingURL=admin.css.map */

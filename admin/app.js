@@ -12,6 +12,9 @@ var loginRouter = require('./routes/auth/login')
 var signupRouter = require('./routes/auth/signup')
 var forgotRouter = require('./routes/auth/forgot')
 var adminRouter = require('./routes/admin/admin')
+var accountRouter = require('./routes/admin/account')
+var productRouter = require('./routes/admin/product')
+var orderRouter = require('./routes/admin/order')
 
 var app = express()
 
@@ -38,6 +41,9 @@ app.use('/', loginRouter)
 app.use('/signup', signupRouter)
 app.use('/forgot', forgotRouter)
 app.use('/admin', adminRouter)
+app.use('/account', accountRouter)
+app.use('/product', productRouter)
+app.use('/order', orderRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

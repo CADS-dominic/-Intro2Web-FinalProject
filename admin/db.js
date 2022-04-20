@@ -9,5 +9,6 @@ const client = new MongoClient(uri, {
 client.connect()
 
 const adminCollection = client.db('ver2').collection('admin')
+const userCollection = client.db('ver2').collection('users')
 
-module.exports = { adminCollection }
+module.exports = { adminCollection, userCollection }

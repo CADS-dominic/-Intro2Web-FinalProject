@@ -12,7 +12,7 @@ passport.use(
 			} else {
 				bcrypt.compare(password, data.password, function (err, result) {
 					if (result) {
-						return done(null, username)
+						return done(null, data)
 					} else {
 						return done(null, false, { error: true })
 					}
@@ -22,13 +22,13 @@ passport.use(
 	})
 )
 
-passport.serializeUser((username, done) => {
-	done(null, username)
+passport.serializeUser((user, done) => {
+	done(null, user)
 })
 
-passport.deserializeUser(async function (username, done) {
-	await adminCollection.findOne({ username: username }).then((data) => {
-		done(null, username)
+passport.deserializeUser(async function (user, done) {
+	await adminCollection.findOne({ username: user.username }).then((data) => {
+		done(null, data)
 	})
 })
 
