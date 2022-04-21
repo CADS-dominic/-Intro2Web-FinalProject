@@ -84,6 +84,19 @@
 		background-color: rgb(255, 255, 255);
 		padding: 5vh 5vw;
 
+		.admin_search {
+			width: 45%;
+			border-radius: 15px;
+			outline: none;
+			border: 1px black solid;
+			margin-top: 10px;
+			padding: 5px 10px;
+		}
+
+		.sort {
+			width: 45%;
+		}
+
 		.admin_profileContainer {
 			.admin_form {
 				display: flex;
@@ -113,13 +126,13 @@
 
 		.admin_accountContainer {
 			.account_list {
-				margin-top: 50px;
+				margin-top: 10px;
 				background-color: whitesmoke;
 				padding: 10px 10px;
 
 				.account_item {
 					display: grid;
-					grid-template-columns: 20% 50% 20% 10%;
+					grid-template-columns: 20% 35% 35% 10%;
 					margin: 10px 0;
 
 					img {
@@ -148,6 +161,33 @@
 						cursor: pointer;
 					}
 				}
+			}
+
+			.account_banList {
+				overflow-y: scroll;
+				max-height: 60vh;
+
+				a {
+					text-decoration: none;
+					color: white;
+					background-color: red;
+					border-radius: 10px;
+					text-align: center;
+					padding: 5px 5px;
+					margin-right: 5px;
+				}
+			}
+		}
+
+		.account_detailsContainer {
+			display: flex;
+			justify-content: space-between;
+			padding: 10px 10px;
+			border: 1px black solid;
+			border-radius: 15px;
+
+			img {
+				height: 100px;
 			}
 		}
 	}

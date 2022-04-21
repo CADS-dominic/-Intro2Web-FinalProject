@@ -1,1 +1,77 @@
-this is unban
+<div class='admin_container'>
+	<div class='sidebar'>
+		<img src={{ava}} alt='Avatar' />
+		<p>Hi, {{username}}</p>
+		<br /><hr />
+		<nav>
+			<div class='sidebar_item'>
+				<i class='fa-solid fa-user'></i>
+				<a href='/admin'>Admin</a>
+			</div>
+			<div class='sidebar_item'>
+				<i class='fa-solid fa-list'></i>
+				<a href='/account'>Account</a>
+				<i class='fa-solid fa-caret-down'></i>
+				<div class='sidebar_subitem'>
+					<a href='/account'>View account list</a>
+					<a href='/account/ban'>Ban account</a>
+					<a href='/account/unban'>Unban account</a>
+				</div>
+			</div>
+			<div class='sidebar_item'>
+				<i class='fa-solid fa-cart-flatbed'></i>
+				<a href='/product'>Product</a>
+				<i class='fa-solid fa-caret-down'></i>
+				<div class='sidebar_subitem'>
+					<a href='/product'>View product list</a>
+					<a href='/product/add'>Add new product</a>
+					<a href='/product/update'>Update product</a>
+				</div>
+			</div>
+			<div class='sidebar_item'>
+				<i class='fa-solid fa-money-bills'></i>
+				<a href='/order'>Order</a>
+				<i class='fa-solid fa-caret-down'></i>
+				<div class='sidebar_subitem'>
+					<a href='/order'>View order list</a>
+					<a href='/order/update'>Update order status</a>
+				</div>
+			</div>
+			<div class='sidebar_item'>
+				<i class='fa-solid fa-right-from-bracket'></i>
+				<a href='/logout'>Logout</a>
+			</div>
+			<hr />
+		</nav>
+	</div>
+	<div class='admin_body'>
+		<h1>Unban account</h1>
+		<hr />
+		<div class='admin_accountContainer'>
+			<div class='account_list'>
+				<div style='display: grid;grid-template-columns: 20% 35% 35% 10%'>
+					<h3>Avatar</h3>
+					<h3>Name</h3>
+					<h3>Email</h3>
+				</div>
+				<hr />
+				<div class='account_banList'>
+					{{#each userList}}
+						<div class='account_item'>
+							<img src={{this.ava}} alt='Avatar' />
+							<p>{{this.name}}</p>
+							<p>{{this.email}}</p>
+							<a
+								href={{this.url}}
+								id={{this.username}}
+								class='account_ban'
+								style='background-color: rgb(0 213 0);'
+							>Unban</a>
+						</div>
+						<hr />
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -45,43 +45,37 @@
 		</nav>
 	</div>
 	<div class='admin_body'>
-		<h1>Users</h1>
+		<h1>Details</h1>
 		<hr />
-		<div style='display: flex; justify-content: space-between;'>
-			<input type='text' placeholder='Search...' class='admin_search' id='account_search' />
-			<form class='sort'>
-				<fieldset>
-					<legend>Sort:</legend>
-					<input type='radio' id='account_sortUsername' name='account_sort' value='username' checked='checked' />
-					<label for='account_sortUsername'>Username</label><br />
-					<input type='radio' id='account_sortIat' name='account_sort' value='iat' />
-					<label for='account_sortIat'>Created on</label><br />
-				</fieldset>
-			</form>
-		</div>
-		<div class='admin_accountContainer'>
-			<div class='account_list'>
-				<div style='display: grid;grid-template-columns: 20% 35% 35% 10%'>
-					<h3>Avatar</h3>
-					<h3>Username</h3>
-					<h3>Role</h3>
+		<div class='account_detailsContainer'>
+			<img src={{user.ava}} alt='Avatar' />
+			{{#if isAdmin}}
+				<div>
+					<h3>ID:</h3>
+					<p>{{user._id}}</p>
+					<h3>Username:</h3>
+					<p>{{user.username}}</p>
 				</div>
-				<hr />
-				<div id='account_listRoot'>
-					{{#each userList}}
-						<div class='account_item'>
-							<img src={{this.ava}} alt='Avatar' />
-							<p>{{this.username}}</p>
-							<p>{{this.role}}</p>
-							<a href='' id={{this.username}} class='account_details'>Details</a>
-						</div>
-						<hr />
-					{{/each}}
+				<div>
+					<h3>Role:</h3>
+					<p>{{user.role}}</p>
+					<h3>Verified:</h3>
+					<p>{{user.verified}}</p>
 				</div>
-			</div>
-			<div class='paginContainer' id='account_pagin'>
-			</div>
+			{{else}}
+				<div>
+					<h3>Email:</h3>
+					<p>{{user.username}}</p>
+					<h3>Name:</h3>
+					<p>{{user.name}}</p>
+				</div>
+				<div style='margin-right: 50px;'>
+					<h3>Role:</h3>
+					<p>{{user.role}}</p>
+					<h3>Ban:</h3>
+					<p>{{user.ban}}</p>
+				</div>
+			{{/if}}
 		</div>
 	</div>
 </div>
-<script src='/javascripts/admin/account.js'></script>
