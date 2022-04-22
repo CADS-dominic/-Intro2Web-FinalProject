@@ -6,25 +6,22 @@ const passport = require('passport')
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
-async function sendForgotMail(username) {
-	let testAccount = await nodemailer.createTestAccount()
+async function sendForgotMail(username, url) {
 	let transporter = nodemailer.createTransport({
-		host: 'smtp.ethereal.email',
-		port: 587,
-		secure: false,
+		service: 'gmail',
+		host: 'smtp.gmail.com',
 		auth: {
-			user: testAccount.user,
-			pass: testAccount.pass,
+			user: process.env.EMAIL,
+			pass: process.env.PASSWORD,
 		},
 	})
 	let info = await transporter.sendMail({
 		from: 'SneakerJeeps@gmail.com',
 		to: username,
 		subject: 'Reset your password',
-		html: `<a href='http://localhost:3000/forgot/form?username=${username}'>Click this link to reset your password</a>`,
+		html: `<a href='${url}/forgot/form?username=${username}'>Click this link to reset your password</a>`,
 	})
-
-	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+	//console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
 }
 
 router.get('/', passport.checkNotAuth, function (req, res) {
@@ -32,8 +29,9 @@ router.get('/', passport.checkNotAuth, function (req, res) {
 })
 
 router.get('/waiting', passport.checkNotAuth, (req, res) => {
+	const url = req.protocol + '://' + req.get('host')
 	if (req.query.username != '') {
-		sendForgotMail(req.query.username)
+		sendForgotMail(req.query.username, url)
 		res.render('auth/forgotWaiting')
 	} else {
 		res.redirect('/forgot')

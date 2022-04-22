@@ -19,8 +19,8 @@
 		}
 
 		img {
-			width: 50%;
-			height: auto;
+			width: 100px;
+			height: 100px;
 			border-radius: 50%;
 			margin: 10px 0;
 		}
@@ -138,6 +138,8 @@
 					img {
 						width: 50px;
 						border-radius: 50%;
+						height: 50px;
+						border: 1px solid white;
 					}
 
 					p,
@@ -188,6 +190,58 @@
 
 			img {
 				height: 100px;
+			}
+		}
+
+		.product_detailsContainer {
+			padding: 10px 10px;
+			border: 1px black solid;
+			border-radius: 15px;
+			display: grid;
+			grid-template-columns: 30% 70%;
+			grid-gap: 10px;
+
+			.product_detailsCard {
+				display: flex;
+				flex-direction: column;
+
+				p {
+					margin: 5px 0;
+				}
+			}
+
+			img {
+				width: 100px;
+				height: 100px;
+			}
+		}
+
+		#add_form {
+			display: flex;
+			flex-direction: column;
+			border: 1px black solid;
+			margin: 10px 20%;
+			padding: 10px 10px;
+
+			input {
+				margin-bottom: 10px;
+				outline: none;
+				border-radius: 10px;
+				border: 1px solid black;
+				padding: 5px 5px;
+			}
+
+			button {
+				background-color: rgb(255, 0, 255);
+				color: white;
+				width: fit-content;
+				border: none;
+				border-radius: 15px;
+				padding: 5px 5px;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 	}

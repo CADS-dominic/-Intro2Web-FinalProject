@@ -45,22 +45,31 @@
 		</nav>
 	</div>
 	<div class='admin_body'>
-		<div class='admin_profileContainer'>
-			<h1>Edit your profile</h1>
-			<hr />
-			<form method='post' class='admin_form' id='profile_form'>
-				<label for='profile_password'>New password:</label>
-				<input type='password' id='profile_password' />
-				<label for='profile_repassword'>Re-enter your new password:</label>
-				<input type='password' id='profile_repassword' />
-				<label for='profile_ava'>Update avatar:</label>
-				{{! <input type='url' id='profile_ava' name='ava' /> }}
-				<input type='file' id='profile_ava' />
-				<div style='text-align: right;'>
-					<button>Save</button>
-				</div>
-			</form>
+		{{! TODO: hien list comment }}
+		<h1>Details</h1>
+		<hr />
+		<div class='product_detailsContainer'>
+			<div>
+				{{#each product.ava}}
+					<img src={{this}} alt='Avatar' />
+				{{/each}}
+			</div>
+			<div class='product_detailsCard'>
+				<p><b>ID: </b>{{product._id}}</p>
+				<p><b>Name:</b> {{product.name}}</p>
+				<p><b>Price: </b>{{product.price}}</p>
+				<p><b>Status:</b>
+					{{#if product.status}}
+						On stock
+					{{else}}
+						Out of stock
+					{{/if}}
+				</p>
+				<p><b>Category: </b>{{product.category}}</p>
+				<p><b>Brand:</b> {{product.brand}}</p>
+				<p><b>Description:</b></p>
+				<p>{{product.description}}</p>
+			</div>
 		</div>
 	</div>
 </div>
-<script src='/javascripts/admin/admin.js'></script>

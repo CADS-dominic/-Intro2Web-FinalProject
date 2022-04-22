@@ -2,13 +2,13 @@ function loadUser(response) {
 	if (!response.error) {
 		document.getElementById('account_listRoot').innerHTML = ''
 		localStorage.setItem('currentPage', response.currentPage)
-		response.userList.forEach((doc) => {
+		response.products.forEach((doc) => {
 			let html = `
 			<div class='account_item'>
-				<img src=${doc.ava} alt='Avatar' />
-				<p>${doc.username}</p>
-				<p>${doc.role}</p>
-				<a href='' id=${doc.username} class="account_details">Details</a>
+				<img src=${doc.ava[0]} alt='Avatar' />
+				<p>${doc.name}</p>
+				<p>${doc.price}</p>
+				<a href='' id=${doc._id} class="account_details">Details</a>
 			</div>
 			<hr />`
 			document.getElementById('account_listRoot').insertAdjacentHTML('beforeend', html)
@@ -23,7 +23,7 @@ function bindEvent() {
 			if (this.readyState == 4 && this.status == 200) {
 				loadUser(JSON.parse(this.responseText))
 				for (let button of document.getElementsByClassName('account_details')) {
-					button.href = `/account/details?username=${button.id}`
+					button.href = `/product/details?id=${button.id}`
 				}
 			}
 		}
@@ -41,7 +41,7 @@ function bindEvent() {
 			if (this.readyState == 4 && this.status == 200) {
 				loadUser(JSON.parse(this.responseText))
 				for (let button of document.getElementsByClassName('account_details')) {
-					button.href = `/account/details?username=${button.id}`
+					button.href = `/product/details?id=${button.id}`
 				}
 			}
 		}
@@ -59,7 +59,7 @@ function bindEvent() {
 			xhttp.onreadystatechange = function () {
 				loadUser(JSON.parse(this.responseText))
 				for (let button of document.getElementsByClassName('account_details')) {
-					button.href = `/account/details?username=${button.id}`
+					button.href = `/product/details?id=${button.id}`
 				}
 			}
 			xhttp.open('POST', window.location.href + '/goto', true)
@@ -99,7 +99,7 @@ window.onload = () => {
 		})
 		.then(() => {
 			for (let button of document.getElementsByClassName('account_details')) {
-				button.href = `/account/details?username=${button.id}`
+				button.href = `/product/details?id=${button.id}`
 			}
 		})
 }
@@ -110,7 +110,7 @@ document.getElementById('account_search').addEventListener('input', (e) => {
 			return res.json()
 		})
 		.then((res) => {
-			loadUser({ error: false, currentPage: 1, userList: res.users })
+			loadUser({ error: false, currentPage: 1, products: res.products })
 		})
 	fetch(window.location.href + '/pagin', {
 		method: 'POST',
@@ -139,7 +139,7 @@ document.getElementById('account_search').addEventListener('input', (e) => {
 		})
 		.then(() => {
 			for (let button of document.getElementsByClassName('account_details')) {
-				button.href = `/account/details?username=${button.id}`
+				button.href = `/product/details?id=${button.id}`
 			}
 		})
 })
@@ -155,11 +155,11 @@ for (let button of document.getElementsByName('account_sort')) {
 				return res.json()
 			})
 			.then((res) => {
-				loadUser({ error: false, currentPage: 1, userList: res.users })
+				loadUser({ error: false, currentPage: 1, products: res.products })
 			})
 			.then(() => {
 				for (let button of document.getElementsByClassName('account_details')) {
-					button.href = `/account/details?username=${button.id}`
+					button.href = `/product/details?id=${button.id}`
 				}
 			})
 	})

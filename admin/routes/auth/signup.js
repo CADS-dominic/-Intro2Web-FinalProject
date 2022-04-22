@@ -4,26 +4,24 @@ var bcrypt = require('bcrypt')
 var { adminCollection } = require('../../db')
 var nodemailer = require('nodemailer')
 var passport = require('passport')
+const cloudinary = require('../../configs/cloudinary')
 
-async function sendVerifyMail(username) {
-	let testAccount = await nodemailer.createTestAccount()
+async function sendVerifyMail(username, url) {
 	let transporter = nodemailer.createTransport({
-		host: 'smtp.ethereal.email',
-		port: 587,
-		secure: false,
+		service: 'gmail',
+		host: 'smtp.gmail.com',
 		auth: {
-			user: testAccount.user,
-			pass: testAccount.pass,
+			user: process.env.EMAIL,
+			pass: process.env.PASSWORD,
 		},
 	})
 	let info = await transporter.sendMail({
 		from: 'SneakerJeeps@gmail.com',
 		to: username,
 		subject: 'Verify your mail',
-		html: `<a href='http://localhost:3000/signup/verified?username=${username}'>Click this link to verify your mail</a>`,
+		html: `<a href='${url}/signup/verified?username=${username}'>Click this link to verify your mail</a>`,
 	})
-
-	console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+	//console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
 }
 
 router.get('/', passport.checkNotAuth, function (req, res) {
@@ -32,6 +30,7 @@ router.get('/', passport.checkNotAuth, function (req, res) {
 
 router.post('/', passport.checkNotAuth, async (req, res, next) => {
 	const { username, password, repassword, ava } = req.body
+	const url = req.protocol + '://' + req.get('host')
 
 	if (
 		username == '' ||
@@ -42,17 +41,18 @@ router.post('/', passport.checkNotAuth, async (req, res, next) => {
 	) {
 		res.send({ error: true })
 	} else {
+		const cloudinaryResponse = await cloudinary.uploader.upload(ava, { upload_preset: 'avatars', public_id: username })
 		await bcrypt.hash(password, parseInt(process.env.SALT)).then((hashed) => {
 			adminCollection
 				.insertOne({
 					username: username,
 					password: hashed,
 					verified: false,
-					ava: ava,
+					ava: cloudinaryResponse.url,
 					iat: Date.now(),
 				})
 				.then(() => {
-					sendVerifyMail(username)
+					sendVerifyMail(username, url)
 					res.send({ error: false })
 				})
 		})

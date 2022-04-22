@@ -45,22 +45,34 @@
 		</nav>
 	</div>
 	<div class='admin_body'>
-		<div class='admin_profileContainer'>
-			<h1>Edit your profile</h1>
-			<hr />
-			<form method='post' class='admin_form' id='profile_form'>
-				<label for='profile_password'>New password:</label>
-				<input type='password' id='profile_password' />
-				<label for='profile_repassword'>Re-enter your new password:</label>
-				<input type='password' id='profile_repassword' />
-				<label for='profile_ava'>Update avatar:</label>
-				{{! <input type='url' id='profile_ava' name='ava' /> }}
-				<input type='file' id='profile_ava' />
-				<div style='text-align: right;'>
-					<button>Save</button>
-				</div>
-			</form>
-		</div>
+		<h1>Add a product</h1>
+		<hr />
+		<form method='post' id='add_form'>
+			<label>Name:</label>
+			<input type='text' id='name' />
+			<label>Price:</label>
+			<input type='number' id='price' />
+			<label>Brand:</label>
+			<input type='text' id='brand' />
+			<div>
+				<label>Status:</label>
+				<input type='radio' id='status_on' name='status' value='on' checked='checked' />
+				<label for='status_on'>On stock</label>
+				<input type='radio' id='status_out' name='status' value='out' />
+				<label for='status_out'>Out of stock</label>
+			</div>
+			<label>Description:</label>
+			<input type='text' id='des' />
+			<label>Categories:</label>
+			<input type='text' id='cat' />
+			<label>Images:</label>
+			<input type='file' multiple id='ava' />
+			<p id='error_addProduct' style='color: red;display:none'>Invalid input</p>
+			<p id='success_addProduct' style='color: rgb(0, 180, 0);display:none'>Success!</p>
+			<div style='text-align: right;'>
+				<button>Submit</button>
+			</div>
+		</form>
 	</div>
 </div>
-<script src='/javascripts/admin/admin.js'></script>
+<script src='/javascripts/admin/addProduct.js'></script>

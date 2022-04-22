@@ -39,7 +39,7 @@ router.get('/', passport.checkAuth, async function (req, res) {
 	}
 
 	let result = []
-	for (let i = 0; i < itemPerPage; i++) {
+	for (let i = 0; i < itemPerPage && userList[i] != null; i++) {
 		result.push(userList[i])
 	}
 

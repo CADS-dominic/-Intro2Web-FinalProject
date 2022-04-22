@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var bcrypt = require('bcrypt')
 const passport = require('passport')
+const cloudinary = require('../../configs/cloudinary')
 
 router.get('/', passport.checkNotAuth, function (req, res) {
 	res.render('auth/login')

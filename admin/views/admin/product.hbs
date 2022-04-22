@@ -48,23 +48,23 @@
 		<h1>Products</h1>
 		<hr />
 		<div style='display: flex; justify-content: space-between;'>
-			<input type='text' placeholder='Search...' class='admin_search' id='product_search' />
+			<input type='text' placeholder='Search...' class='admin_search' id='account_search' />
 			<form class='sort'>
 				<fieldset>
 					<legend>Sort:</legend>
-					<input type='radio' id='product_sortUsername' name='product_sort' value='username' checked='checked' />
-					<label for='product_sortUsername'>Username</label><br />
-					<input type='radio' id='product_sortIat' name='product_sort' value='iat' />
-					<label for='product_sortIat'>Created on</label><br />
+					<input type='radio' id='account_sortUsername' name='account_sort' value='username' checked='checked' />
+					<label for='account_sortUsername'>Name</label><br />
+					<input type='radio' id='account_sortIat' name='account_sort' value='iat' />
+					<label for='account_sortIat'>Price</label><br />
 				</fieldset>
 			</form>
 		</div>
 		<div class='admin_accountContainer'>
 			<div class='account_list'>
 				<div style='display: grid;grid-template-columns: 20% 35% 35% 10%'>
-					<h3>Avatar</h3>
-					<h3>Username</h3>
-					<h3>Role</h3>
+					<h3>Image</h3>
+					<h3>Name</h3>
+					<h3>Price</h3>
 				</div>
 				<hr />
 				<div id='account_listRoot'>
@@ -73,7 +73,7 @@
 							<img src={{this.ava}} alt='Avatar' />
 							<p>{{this.name}}</p>
 							<p>{{this.price}}</p>
-							<a href='' id={{this.name}} class='account_details'>Details</a>
+							<a href='' id={{this._id}} class='account_details'>Details</a>
 						</div>
 						<hr />
 					{{/each}}
@@ -84,3 +84,4 @@
 		</div>
 	</div>
 </div>
+<script src='/javascripts/admin/product.js'></script>
