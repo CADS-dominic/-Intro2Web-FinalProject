@@ -38,5 +38,6 @@ document.getElementById('add_form').addEventListener('submit', (e) => {
 				document.getElementById('error_addProduct').style.display = 'none'
 				document.getElementById('success_addProduct').style.display = 'block'
 			}
+			img = []
 		})
 })

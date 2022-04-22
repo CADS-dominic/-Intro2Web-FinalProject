@@ -12,14 +12,14 @@ router.get('/', passport.checkAuth, async function (req, res) {
 	const { input, sort } = req.query
 	await productCollection.find({}).forEach((doc) => {
 		if (input == undefined || input == '') {
-			products.push(doc)
+			products.push({ ...doc, ava: doc.ava[0] })
 		} else {
 			if (
 				doc.name.toLowerCase().includes(input.toLowerCase()) ||
 				doc.brand.toLowerCase().includes(input.toLowerCase()) ||
 				doc.category.toLowerCase().includes(input.toLowerCase())
 			)
-				products.push(doc)
+				products.push({ ...doc, ava: doc.ava[0] })
 		}
 	})
 
@@ -81,7 +81,8 @@ router.post('/next', async (req, res) => {
 	let products = []
 	if (input == undefined) {
 		await productCollection.find({}).forEach((doc) => {
-			products.push(doc)
+			console.log(doc)
+			products.push({ ...doc, ava: doc.ava[0] })
 		})
 	} else {
 		await productCollection.find({}).forEach((doc) => {
@@ -90,7 +91,7 @@ router.post('/next', async (req, res) => {
 				doc.brand.toLowerCase().includes(input.toLowerCase()) ||
 				doc.category.toLowerCase().includes(input.toLowerCase())
 			)
-				products.push(doc)
+				products.push({ ...doc, ava: doc.ava[0] })
 		})
 	}
 
@@ -128,7 +129,7 @@ router.post('/prev', async (req, res) => {
 	let products = []
 	if (input == undefined) {
 		await productCollection.find({}).forEach((doc) => {
-			products.push(doc)
+			products.push({ ...doc, ava: doc.ava[0] })
 		})
 	} else {
 		await productCollection.find({}).forEach((doc) => {
@@ -137,7 +138,7 @@ router.post('/prev', async (req, res) => {
 				doc.brand.toLowerCase().includes(input.toLowerCase()) ||
 				doc.category.toLowerCase().includes(input.toLowerCase())
 			)
-				products.push(doc)
+				products.push({ ...doc, ava: doc.ava[0] })
 		})
 	}
 
@@ -175,7 +176,7 @@ router.post('/goto', async (req, res) => {
 	let products = []
 	if (input == undefined) {
 		await productCollection.find({}).forEach((doc) => {
-			products.push(doc)
+			products.push({ ...doc, ava: doc.ava[0] })
 		})
 	} else {
 		await productCollection.find({}).forEach((doc) => {
@@ -184,7 +185,7 @@ router.post('/goto', async (req, res) => {
 				doc.brand.toLowerCase().includes(input.toLowerCase()) ||
 				doc.category.toLowerCase().includes(input.toLowerCase())
 			)
-				products.push(doc)
+				products.push({ ...doc, ava: doc.ava[0] })
 		})
 	}
 
@@ -239,7 +240,7 @@ router.post('/add', async (req, res) => {
 	} else {
 		let temp = []
 		for (let img of ava) {
-			const response = await cloudinary.uploader.upload(img, { upload_preset: 'products' })
+			const response = await cloudinary.uploader.upload(img)
 			temp.push(response.url)
 		}
 		await productCollection.insertOne({
@@ -269,7 +270,7 @@ router.post('/update', async (req, res) => {
 	} else {
 		let temp = []
 		for (let img of ava) {
-			const response = await cloudinary.uploader.upload(img, { upload_preset: 'products' })
+			const response = await cloudinary.uploader.upload(img)
 			temp.push(response.url)
 		}
 		await productCollection.updateOne(
@@ -291,6 +292,27 @@ router.post('/update', async (req, res) => {
 			}
 		)
 		res.send({ error: false })
+	}
+})
+
+router.post('/remove', async (req, res) => {
+	const public_id = req.body.url.split('/').at(-1),
+		id = req.body.id
+	try {
+		// await cloudinary.api.delete_resources(public_id, (err, res) => {
+		// 	console.log(err, res)
+		// })
+		await productCollection.updateOne(
+			{ _id: ObjectId(id) },
+			{
+				$pull: {
+					ava: req.body.url,
+				},
+			}
+		)
+		res.send({ error: false })
+	} catch (e) {
+		res.send({ error: true })
 	}
 })
 

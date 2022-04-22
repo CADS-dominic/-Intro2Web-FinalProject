@@ -5,7 +5,7 @@ function loadUser(response) {
 		response.products.forEach((doc) => {
 			let html = `
 			<div class='account_item'>
-				<img src=${doc.ava[0]} alt='Avatar' />
+				<img src=${doc.ava} alt='Avatar' />
 				<p>${doc.name}</p>
 				<p>${doc.price}</p>
 				<a href='' id=${doc._id} class="account_details">Details</a>

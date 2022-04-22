@@ -51,11 +51,12 @@
 		<div class='product_detailsContainer'>
 			<div>
 				{{#each product.ava}}
-					<img src={{this}} alt='Avatar' />
+					<img src={{this}} alt='Avatar' class={{this}} />
+					<button class={{this}} onclick='remove(event)'>Remove</button>
 				{{/each}}
 			</div>
 			<div class='product_detailsCard'>
-				<p><b>ID: </b>{{product._id}}</p>
+				<p id='getid'><b>ID: </b>{{product._id}}</p>
 				<p><b>Name:</b> {{product.name}}</p>
 				<p><b>Price: </b>{{product.price}}</p>
 				<p><b>Status:</b>
@@ -73,3 +74,4 @@
 		</div>
 	</div>
 </div>
+<script src='/javascripts/admin/details.js'></script>
