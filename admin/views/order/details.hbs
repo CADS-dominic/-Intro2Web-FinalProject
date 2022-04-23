@@ -40,32 +40,32 @@
 		</nav>
 	</div>
 	<div class='admin_body'>
-		<h1>Orders</h1>
+		<h1>Details</h1>
 		<hr />
-		<input type='text' placeholder='Search...' class='admin_search' id='account_search' />
-		<div class='admin_accountContainer'>
-			<div class='account_list'>
-				<div style='display: grid;grid-template-columns: 20% 35% 35% 10%'>
-					<h3>Status</h3>
-					<h3>Address</h3>
-					<h3>Total</h3>
+		<div class='order_detailsContainer'>
+			<div><b>ID:</b> {{order._id}}</div>
+			<div><b>Address:</b> {{order.address}}</div>
+			<div><b>Created on:</b> {{order.iat}}</div>
+			<div id='order_status'><b>Status:</b> {{order.status}}</div>
+			{{#each products}}
+				<div class='order_itemContainer'>
+					<img src={{this.ava}} alt='' />
+					<div>{{this.name}}</div>
+					<div>{{this.price}}</div>
+					<div>x{{this.quantity}}</div>
 				</div>
-				<hr />
-				<div id='account_listRoot'>
-					{{#each orders}}
-						<div class='account_item'>
-							<p>{{this.status}}</p>
-							<p>{{this.address}}</p>
-							<p>{{this.totalPrice}}</p>
-							<a href='' id={{this._id}} class='account_details'>Details</a>
-						</div>
-						<hr />
-					{{/each}}
-				</div>
-			</div>
-			<div class='paginContainer' id='account_pagin'>
+			{{/each}}
+			<div style='text-align: right;'><b>Total:</b> {{order.totalPrice}}</div>
+			<div style='text-align: right;'>
+				{{#if order.isPending}}
+					<button class='order_deli' id={{order._id}} style='background-color: #3298dc;'>Delivery</button>
+					<button class='order_done' id={{order._id}} style='background-color: green;'>Done</button>
+				{{/if}}
+				{{#if order.isDelivery}}
+					<button class='order_done' id={{order._id}} style='background-color: green;'>Done</button>
+				{{/if}}
 			</div>
 		</div>
 	</div>
 </div>
-<script src='/javascripts/admin/order.js'></script>
+<script src='/javascripts/admin/orderStatus.js'></script>
