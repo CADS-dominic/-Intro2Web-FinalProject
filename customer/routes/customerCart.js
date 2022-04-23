@@ -80,4 +80,100 @@ router.post('/checkout/:id', async (req, res, next) => {
   });
 });
 
+router.post('/:id/minus-:index', async (req, res, next) => {
+  const cart = [];
+  let cartList = [];
+
+  await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}}).then((doc) => {
+    cartList = doc.cart;
+  });
+
+  cartList[req.params.index].quantity = Number(cartList[req.params.index].quantity) - 1;
+
+  await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
+
+  const promise = new Promise((resolve, reject) => {
+    if (cartList.length == 0) reject();
+    cartList.forEach(async (doc, index) => {
+      const product = await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } });
+      cart.push({
+        product,
+        quantity: doc.quantity
+      })
+      if (index === cartList.length - 1) {
+        resolve(cart)
+      }
+    })
+  })
+  .then((cart) => {
+    const total = cart.reduce((sum, item) => {
+      return sum + item.product.price * item.quantity
+    }, 0);
+    const init = {
+      cart,
+      total
+    }
+    productOrder = {
+      cartList,
+      total
+    }
+    res.send(init);
+  })
+  .catch((err) => {
+    const init = {
+      cart: [],
+      total: 0
+    }
+    res.send(init);
+  })
+});
+
+router.post('/:id/plus-:index', async (req, res, next) => {
+  const cart = [];
+  let cartList = [];
+
+  await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}}).then((doc) => {
+    cartList = doc.cart;
+  });
+
+  cartList[req.params.index].quantity = Number(cartList[req.params.index].quantity) + 1;
+
+  await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
+
+  const promise = new Promise((resolve, reject) => {
+    if (cartList.length == 0) reject();
+    cartList.forEach(async (doc, index) => {
+      const product = await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } });
+      cart.push({
+        product,
+        quantity: doc.quantity
+      })
+      if (index === cartList.length - 1) {
+        resolve(cart)
+      }
+    })
+  })
+  .then((cart) => {
+    const total = cart.reduce((sum, item) => {
+      return sum + item.product.price * item.quantity
+    }, 0);
+    const init = {
+      cart,
+      total
+    }
+    productOrder = {
+      cartList,
+      total
+    }
+    res.send(init);
+  })
+  .catch((err) => {
+    const init = {
+      cart: [],
+      total: 0
+    }
+    res.send(init);
+  })
+});
+
 module.exports = router;
