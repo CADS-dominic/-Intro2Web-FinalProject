@@ -1,0 +1,38 @@
+<body>
+  <div class="header">
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="/">
+          <img class="logo" src="/public/images/logo.png" alt="">
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="row mt-8 mb-5" style="margin-top: 150px">
+    <div style="height: 60px;"></div>
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3" style="color: black;">Forgot password</h1>
+        <form class="row" action="/auth/forgot" method="POST">
+          <div class="col-2">
+          </div>
+          <div class="col-6">
+            <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3"
+              style="background-color: #693B72; border: none;">Send</button>
+          </div>
+        </form>
+      </div>
+    <%- include ('./msgAlert'); %>
+
+
+      <div style="height: 40px;"></div>
+
+    </div>
+  </div>
+
+
+</body>

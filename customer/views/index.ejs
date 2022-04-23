@@ -1,0 +1,108 @@
+<body style="background-color: black; color: black; min-height: 100vh;">
+  <link rel='stylesheet' href='/stylesheets/customerHome.css' />
+    <div class="wrapper">
+      
+      <div class="banner">
+  
+        <div class="banner-1">
+          <img src="../public/images/banner-1.jpg" alt="">
+        </div>
+  
+        <div class="banner-23">
+  
+          <div class="banner-2">
+            <img src="../public/images/banner-2.png" alt="">
+          </div>
+  
+          <div class="banner-3">
+            <img src="../public/images/banner-3.png" alt="">
+          </div>
+  
+        </div>
+  
+      </div>
+  
+      <form class="w-100" method="POST" action="/">
+  
+        <div class="component">
+          <h1>Best Seller</h1>
+  
+          <ul class="component-list">
+  
+            <% for(var i=0; i<bestSeller.length; i++) { %>
+  
+              <li class="component-item">
+                <a href="/detail/<%= bestSeller[i]._id %> ">
+                  <img src=<%=bestSeller[i].ava[0] %> alt="">
+                  <p class="item-name">
+                    <%= bestSeller[i].name %>
+                  </p>
+                  <div class="price-discount">
+                    <span class="price">
+                      <%=bestSeller[i].price %>
+                    </span>
+                  </div>
+                </a>
+              </li>
+              <% } %>
+  
+          </ul>
+        </div>
+  
+        <div class="new-product">
+          <h1>New Product</h1>
+  
+          <ul class="component-list newProduct">
+  
+            <% for(var i=0; i<newProduct.length; i++) { %>
+  
+              <li class="component-item">
+                <a href="/detail/<%= newProduct[i]._id %> ">
+                  <img src=<%=newProduct[i].ava[0] %> alt="">
+                  <p class="item-name">
+                    <%= newProduct[i].name %>
+                  </p>
+                  <div class="price-discount">
+                    <span class="price">
+                      <%=newProduct[i].price %>
+                    </span>
+                  </div>
+                </a>
+              </li>
+              <% } %>
+  
+          </ul>
+          <div class="navigation">
+            <div class='prev'>Prev</div>
+            <div class='next'>Next</div>
+          </div>
+          
+  
+        </div>
+  
+        <div class="brand">
+          <h1>Top Brand</h1>
+  
+          <ul class="component-list">
+  
+            <% for(var i=0; i<brand.length; i++) { %>
+  
+              <li class="component-item">
+                <a href="/collections">
+                  <img src=<%=brand[i].ava %> alt="">
+                  <p class="item-name">
+                    <%= brand[i].name %>
+                  </p>
+                </a>
+              </li>
+  
+              <% } %>
+  
+          </ul>
+  
+        </div>
+  
+      </form>
+    </div>
+  </body>
+  

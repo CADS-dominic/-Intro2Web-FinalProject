@@ -1,0 +1,140 @@
+html {
+  position: relative;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+body {
+  background-color: black !important;
+  color: white;
+}
+
+.auth-form,
+.add-product-form {
+  border: 1px white solid;
+  background-color: #0000003b;
+}
+
+.main-container {
+  min-height: 100vh;
+  color: white;
+  padding: 0 0 !important;
+  background-color: #6e306c;
+}
+
+.navbar {
+  background-image: linear-gradient(180deg, #4b7b9b, #6e306c);
+  padding: 0 1rem;
+}
+
+footer {
+  background-color: black;
+  color: #ffffff;
+}
+
+input {
+  outline: none;
+  border-radius: 10px;
+  border: none;
+  margin: 1rem 0 !important;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: white !important;
+  margin: 1rem 0;
+  padding-right: 5rem !important;
+}
+
+.products-admin {
+  border: 1px white solid;
+  width: 80%;
+  margin: 1rem 10% !important;
+  height: 10rem;
+}
+
+p {
+  margin-bottom: 0 !important;
+}
+
+.users-admin {
+  border: 1px white solid;
+  width: 80%;
+  margin: 1rem 10% !important;
+}
+
+.footer {
+  background-color: #f5f5f5;
+  bottom: 0;
+  height: 350px;
+}
+
+.list-policy {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.policy-item {
+  display: inline-block;
+  margin: 20px;
+}
+
+.policy-item--separate::after {
+  content: '';
+  position: relative;
+  border-left: 1.5px solid rgba(197, 193, 193, 0.5);
+  font-size: 14px;
+  right: -20px;
+}
+
+.policy-item a {
+  text-decoration: none;
+  color: #808080;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.certificate {
+  display: flex;
+  justify-content: center;
+}
+.certificate a {
+  margin-left: 20px;
+}
+
+.certificate-img {
+  width: 100%;
+}
+
+.ending-script {
+  margin: 0;
+  margin-top: 8px;
+  text-align: center;
+  color: rgb(102, 101, 101);
+}
+
+.invalid-input{
+  border: red 1px solid;
+  color: red;
+}
+
+.valid-input{
+  border: rgb(0, 255, 0) 1px solid;
+  color: rgb(0, 255, 0);
+}
+
+#form_filter{
+  width: 50%;
+  margin: 0 25%;
+  border: 3px solid white;
+  text-align: center;
+}

@@ -1,0 +1,47 @@
+<body>
+    <link rel='stylesheet' href='/stylesheets/customerCart.css' />
+    <div class="wrapper">
+        <form class="w-100" method="POST" action="/cart/checkout/<%= user.id %>">
+
+            <ul class="cart-list">
+
+                <% for(var i=0; i<cart.length; i++) { %>
+
+                    <li class="cart-item">
+                        <img src=<%=cart[i].product.ava[0] %> alt="">
+
+                        <div class="info">
+                            <p class="item-name">
+                                <%= cart[i].product.name %>
+                            </p>
+                            <div class="price-discount">
+                                <span class="price">
+                                    <%=cart[i].product.price %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="amount">
+                            <i class="fa-solid fa-minus"></i>
+                            <p><%=cart[i].quantity%></p>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </li>
+
+                    <% } %>
+
+            </ul>
+
+            <div class="payment">
+                <div class="inputShipping">
+                    <input type="text" class="address" placeholder="Enter your address: ">
+                </div>
+                <div class="checkout">
+                    <h2 class = "total">Total: <%=total%></h2>
+                    <button type="submit" class = "checkout-btn">Checkout</button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</body>

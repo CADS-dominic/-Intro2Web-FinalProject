@@ -1,0 +1,28 @@
+<body>
+    <link rel='stylesheet' href='/stylesheets/customerSearch.css' />
+    <div class="wrapper">
+        <form class="w-100" method="POST" action="/collections">
+
+            <div class="component-header">
+                <h1>Result</h1>
+                <i class="fa-solid fa-filter" style="font-size: 32px; color: white;"></i>
+                <div id='form_filter'>
+                    <h1>Price:</h1>
+                    <input type='number' id='input_min-price' placeholder='Min price' />
+                    <input type='number' id='input_max-price' placeholder='Max price' />
+                    <div class="filterBtn">Filter</div>
+                </div>
+            </div>
+
+            <ul class="result">
+
+            </ul>
+            <div class="navigation">
+                <div class='prev'>Prev</div>
+                <div class='next'>Next</div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

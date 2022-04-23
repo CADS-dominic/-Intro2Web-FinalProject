@@ -1,0 +1,24 @@
+<body>
+    <link rel='stylesheet' href='/stylesheets/customerAbout.css' />
+
+    <div class="wrapper">
+        <form class="w-100" method="POST" action="/collections">
+            <ul class="info">
+                <% for(var i=0; i<info.length; i++) { %>
+                    <li class="info-item">
+                        <img src=<%=info[i].avt%> >
+                        <span class="name">
+                            <%=info[i].name%>
+                        </span>
+                        <span class="age">
+                            <%=info[i].age%>
+                        </span>
+                        <span class="phone">
+                            <%=info[i].phone%>
+                        </span>
+                    </li>
+                    <% } %>
+            </ul>
+        </form>
+    </div>
+</body>

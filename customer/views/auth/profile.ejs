@@ -1,0 +1,148 @@
+<body>
+  <%- include ('./msgAlert'); %>
+
+    <div class="container mt-8 mb-4" style="margin-top: 200px;">
+      <h2>View Profile</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <%= user.id %>
+            </td>
+            <td>
+              <%= user.name %>
+            </td>
+            <td>
+              <%= user.email %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Edit Profile</h2>
+
+      <form method="POST" action="/auth/profile/<%=user._id%>">
+        <div class="form-group mt-4">
+          <label>Fullname</label>
+          <input id="fullname" type="text" class="form-control" value="<%= user.name %>" name="name">
+        </div>
+        <div class="form-group mt-4">
+          <label>Email</label>
+          <input id="email" type="text" class="form-control" value="<%= user.email %>" name="email">
+          <div id="err" class="mt-2"></div>
+
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+
+      <form id="formPW" method="POST" action="/auth/profile/pw/<%=user._id%>" class="mt-4">
+        <h2>Change Password</h2>
+        <div class="form-group mt-4">
+          <label for="password">Old password</label>
+          <input type="password" id="curPassword" name="curPassword" class="form-control mb-2 pw"
+            placeholder="Enter password" />
+        </div>
+
+        <div class="form-group mt-2">
+          <label for="password">New password</label>
+          <input type="password" id="newPassword" name="newPassword" class="form-control mb-2 pw"
+            placeholder="Enter password" />
+        </div>
+
+        <div class="mt-4">
+          <button id="adChange" type="submit" class="btn btn-primary" disabled="disabled">Change</button>
+        </div>
+      </form>
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+      $(function () {
+        $('#fullname').on('input', function () {
+          if (this.value.match(/^[a-zA-Z]{3,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$/)) {
+            $('#fullname').removeClass('is-invalid')
+            $('#fullname').addClass('is-valid')
+
+          } else {
+            $('#fullname').addClass('is-invalid')
+            $('#fullname').removeClass('is-valid')
+
+          }
+        })
+
+        $('#email').on('input', function () {
+          const getEm = this.value
+          $.getJSON('/auth/api/check-email-exist/' + this.value, function (isExist) {
+            if (isExist) {
+              $('#email').addClass('is-invalid')
+              $('#err').html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>\This email already exists.\
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>")
+            } else {
+              $('#err').html('');
+              if (getEm.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                $('#email').removeClass('is-invalid')
+                $('#email').addClass('is-valid')
+              } else {
+                $('#email').addClass('is-invalid')
+                $('#email').removeClass('is-valid')
+
+              }
+            }
+          })
+
+
+
+        })
+
+        let arr = []
+        $('.pw').keyup(function () {
+          var empty = false;
+
+          if (!arr.includes(this.id)) {
+            arr.push(this.id)
+          }
+          if (this.value == '') {
+            const index = arr.indexOf(this.id);
+            if (index > -1) {
+              arr.splice(index, 1); // 2nd parameter means remove one item only
+            }
+          }
+          if (arr.length != 2) {
+            $('#adChange').attr('disabled', 'disabled');
+          } else {
+            $('#adChange').removeAttr('disabled');
+          }
+        });
+
+        $('#newPassword').keyup(function () {
+          if (this.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)) {
+            $('#newPassword').removeClass('is-invalid')
+            $('#newPassword').addClass('is-valid')
+
+          } else {
+            $('#newPassword').addClass('is-invalid')
+            $('#newPassword').removeClass('is-valid')
+          }
+        })
+      })
+
+
+
+    </script>
+</body>

@@ -1,0 +1,98 @@
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  position: relative; 
+}
+
+#form_filter {
+  display: none;
+  top: 40px;
+  right: 0;
+  position: absolute;
+  background-color: black;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  z-index: 1;
+  padding: 20px;
+}
+
+#form_filter.active {
+  display: block;
+}
+.filterBtn {
+  width: 80px;
+  margin: auto;
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.component-header .fa-filter-list {
+}
+
+.result {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+  }
+  
+  .result-item {
+    width: 100%;
+    padding: 20px;
+    background-image: linear-gradient(180deg, #9b4398, #5c4a28);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .result-item a {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .result-item img {
+    width: 200px;
+  }
+  
+  .result-item:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    cursor: pointer;
+  }
+  
+  .component-item img {
+    width: 100%;
+  }
+  
+  .result-item-name {
+    color: white;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    max-height: 20px;
+    font-weight: 600;
+  }
+  
+  .result-price-discount {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .result-price {
+    font-size: 20px;
+    color: orange;
+    font-weight: 600;
+  } 
+  
+  .discount {
+    color: red;
+    font-weight: 600;
+  }

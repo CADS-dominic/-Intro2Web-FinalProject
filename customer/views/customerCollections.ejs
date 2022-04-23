@@ -1,0 +1,43 @@
+<body>
+    <link rel='stylesheet' href='/stylesheets/customerCollections.css' />
+    <div class="wrapper">
+        <form class="w-100" method="POST" action="/collections">
+
+            <div class="brand">
+                <ul class="brand-list">
+
+                    <% for(var i=0; i<brand.length; i++) { %>
+
+                        <li class="brand-item">
+                            <div class="info">
+                                <img src=<%=brand[i].ava %> alt="">
+                                <p class="item-name">
+                                    <%= brand[i].name %>
+                                </p>
+                            </div>
+
+                            <ul class="product-list">
+                                <% for(var j=0; j<brand[i].products.length; j++) { %>
+
+                                    <li class="product-item">
+                                        <a href="/detail/<%= brand[i].products[j]._id %> ">
+                                            <img src=<%=brand[i].products[j].ava[0] %> alt="">
+                                            <p class="item-name">
+                                                <%= brand[i].products[j].name %>
+                                            </p>
+                                            <div class="price-discount">
+                                                <span class="price">
+                                                    <%=brand[i].products[j].price %>
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                        </li>
+                        <% } %>
+                </ul>
+            </div>
+        </form>
+    </div>
+</body>

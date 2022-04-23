@@ -1,0 +1,81 @@
+<body>
+    <div class="header">
+        <ul class="nav">
+            <li class="nav-item">
+                <a href="/">
+                    <img class="logo" src="/public/images/logo.png" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <h1>...</h1>
+
+    <div class="content" style="margin-top: 300px; width: 1200px; margin: 120px auto 0 auto;">
+        <div class="row mt-5 mb-5">
+            <div class="col-md-6 m-auto text-center">
+                <div class="card card-body">
+                    <h1 class="text-center mb-3" style="color: black;">
+                        <i class="fa-solid fa-lock"></i>
+                        Reset Password
+                    </h1>
+
+
+                        <form action="/auth/resetpw/<%- email %>" method="POST">
+
+                            <div class="form-group">
+                                <input type="password" id="ePW" name="ePW" class="form-control"
+                                    placeholder="Enter password" />
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <input type="password" id="rePW" name="rePW" class="form-control mb-2"
+                                    placeholder="Re-enter password" />
+                            </div>
+
+                            <div class="row ms-1 me-1">
+                                <button type="submit" class="btn btn-primary btn-block mt-2 text-center">Submit</button>
+                            </div>
+                        </form>
+                        <%- include ('./msgAlert'); %>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $('#ePW').keyup(function () {
+                if (this.value.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)) {
+                    $('#ePW').removeClass('is-invalid')
+                    $('#ePW').addClass('is-valid')
+
+                } else {
+                    $('#ePW').addClass('is-invalid')
+                    $('#ePW').removeClass('is-valid')
+                }
+            })
+
+            $('#rePW').keyup(function () {
+                console.log($('#ePW').val())
+                console.log(this.value)
+                if (this.value === $('#ePW').val()) {
+                    $('#rePW').removeClass('is-invalid')
+                    $('#rePW').addClass('is-valid')
+                } else {
+                    $('#rePW').addClass('is-invalid')
+                    $('#rePW').removeClass('is-valid')
+                }
+
+            })
+        })
+
+
+    </script>
+
+</body>

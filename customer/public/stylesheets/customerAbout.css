@@ -1,0 +1,19 @@
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-item img {
+    width: 200px;
+    border-radius: 50%;
+}
+
+.info-item span {
+    color: white;
+}

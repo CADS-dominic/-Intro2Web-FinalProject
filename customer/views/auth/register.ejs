@@ -1,0 +1,105 @@
+<body>
+  <div class="header">
+    <ul class="nav">
+      <li class="nav-item">
+        <a href="/">
+          <img class="logo" src="../../public/images/logo.png" alt="" >
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="content" style="width: 1200px; margin: 120px auto 0 auto;">
+    <div class="row mb-5">
+      <div class="col-md-6 m-auto">
+        <div class="card card-body">
+          <h1 class="text-center mb-3" style="color: black">
+            <i class="fas fa-user-plus"></i> Register
+          </h1>
+  
+          <%- include ('./msgAlert'); %>
+            <div id="err"></div>
+  
+            <form action="/auth/register" method="POST">
+              <div class="form-group mt-2">
+                <!-- <label for="name">Fullname</label> -->
+                <input type="name" id="name" name="name" class="form-control" placeholder="Full Name"
+                  value="<%= typeof name != 'undefined' ? name : '' %>" />
+                <p class="text-muted fst-italic" style="margin: 0; margin-left: 1rem; font-size: 13px;">
+                  Fullname at least two words separated by at least one space.
+                </p>
+              </div>
+              <div class="form-group mt-2">
+                <!-- <label for="email">Email</label> -->
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email"
+                  value="<%= typeof email != 'undefined' ? email : '' %>" />
+              </div>
+              <div class="form-group mt-2">
+                <!-- <label for="password">Password</label> -->
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                  value="<%= typeof password != 'undefined' ? password : '' %>" />
+                <p class="text-muted fst-italic" style="margin: 0; margin-left: 1rem; font-size: 13px;">
+                  Password must be at least 8 characters, 1 number, 1 upper, 1 lowercase character.
+                </p>
+              </div>
+  
+  
+  
+              <button type="submit" class="btn btn-primary btn-block mt-2">
+                Register
+              </button>
+            </form>
+            <p class="lead mt-4">Have An Account? <a href="/auth/login">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+
+  <script>
+    $(function () {
+      $('#name').on('input', function () {
+        console.log(this.value)
+        if (this.value.match(/[a-zA-Z]{3,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$/)) {
+          $('#name').removeClass('is-invalid')
+          $('#name').addClass('is-valid')
+        } else {
+          $('#name').addClass('is-invalid')
+        }
+      })
+
+
+      $('#email').on('input', function () {
+        const getEm = this.value
+
+        $.getJSON('/auth/api/check-email-exist/' + this.value, function (isExist) {
+          if (isExist) {
+            $('#email').addClass('is-invalid')
+            $('#err').html("<div class='alert alert-danger alert-dismissible fade show' role='alert'>\This email already exists.\
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>")
+          } else {
+            $('#err').html('');
+            if (getEm.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+              $('#email').removeClass('is-invalid')
+              $('#email').addClass('is-valid')
+            } else {
+              $('#email').addClass('is-invalid')
+              $('#email').removeClass('is-valid')
+
+            }
+          }
+        })
+      })
+
+
+
+    })
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+</body>

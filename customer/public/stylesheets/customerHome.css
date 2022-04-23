@@ -1,0 +1,89 @@
+.banner {
+  display: flex;
+  width: 100%;
+}
+
+.banner-1 {
+  width: 80%;
+}
+
+.banner-23 {
+  width: 20%;
+}
+
+.banner-2 {
+  height: 189.5px;
+}
+
+.banner-3 {
+  height: 189.5px;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+}
+
+.component {}
+
+.component-list {
+  padding: 0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.component-item {
+  width: 18%;
+
+  background-image: linear-gradient(180deg, #9b4398, #5c4a28);
+  border-radius: 8px;
+  padding: 20px 0;
+}
+
+.component-item a {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.component-item:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.component-item img {
+  width: 180px;
+  height: 180px;
+}
+
+.item-name {
+  color: white;
+  text-align: center;
+  width: 100%;
+  font-size: 20px;
+  height: 40px;
+  font-weight: 600;
+}
+
+.price-discount {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.price {
+  font-size: 20px;
+  color: orange;
+  font-weight: 600;
+}
+
+.discount {
+  color: red;
+  font-weight: 600;
+}

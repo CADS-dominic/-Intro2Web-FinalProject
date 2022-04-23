@@ -1,0 +1,273 @@
+var express = require('express');
+var router = express.Router();
+const Users = require('../model/user')
+const bcrypt = require('bcryptjs')
+const passport = require('passport')
+const { ensureAuthenticated } = require('../config/auth')
+const jwt = require('jsonwebtoken')
+
+const mailgun = require("mailgun-js");
+const DOMAIN = process.env.MAILGUN_DOMAIN;
+const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
+
+router.get('/login', function (req, res, next) {
+  res.render('./auth/login.ejs');
+});
+router.get('/register', function (req, res, next) {
+  res.render('./auth/register.ejs');
+});
+
+router.post('/register', async (req, res, next) => {
+  const { name, email, password } = req.body
+  let errors = []
+
+  if (!name || !email || !password) {
+    errors.push('Please complete all fields')
+  }
+  if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)) {
+    errors.push('Please choose a more secure password.')
+  }
+  if (!name.match(/[a-zA-Z]{3,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$/)) {
+    errors.push('Invalid fullname')
+  }
+  if (errors.length > 0) {
+    res.render('./auth/register', { errors, name, email, password })
+  }
+  else {
+    Users.findOne({ email: email })
+      .then(user => {
+        if (user) {
+          errors.push('This email already exists')
+          res.render('./auth/register', { errors, name, email, password })
+        }
+        else {
+          const token = jwt.sign({ name, email, password }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
+          const data = {
+            from: 'noreply@gmail.com',
+            to: email,
+            subject: 'Account Activation Link',
+            html: `
+              <h2>Pleace click on given link to activate your account</h2>
+              <p>${process.env.CLIENT_URL}/auth/email-activate/${token}</p>
+            `
+          };
+          mg.messages().send(data, function (error, body) {
+            if (error) {
+              return res.json({
+                error: "Something went wrong while sent email"
+              })
+            } else {
+              req.flash('success_msg', 'Email has been sent, kindly activate your account')
+              res.redirect('/auth/login')
+            }
+          });
+        }
+
+      })
+      .catch(next)
+  }
+
+});
+
+
+router.get('/email-activate/:tok', (req, res, next) => {
+  const token = req.params.tok
+  // console.log(token)
+  if (token) {
+    jwt.verify(token, process.env.JWT_ACC_ACTIVATE, function (err, decodedToken) {
+      if (err) {
+        res.status(400).json({ error: 'Incorrect or expired link.' })
+      } else {
+        const { name, email, password } = decodedToken
+
+        const { order, cart, ava, ban, iat, wallet } = { order: [], cart: [], ava: '', ban: false, iat: Date.now(), wallet: 10000 }
+        const newUser = new Users({ name, email, password, order, cart, ava, ban, iat, wallet });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err
+            newUser.password = hash
+            newUser.save()
+              .then(() => {
+                req.flash('success_msg', 'You have successfully registered and can login')
+                res.redirect('/auth/login')
+              })
+              .catch(err => { error: "Error in sign up while account activation: " })
+          })
+        })
+      }
+    })
+  } else {
+    res.json({ error: 'Something went wrong!!!' })
+  }
+})
+
+router.post('/login', (req, res, next) => {
+  const { email, password } = req.body
+
+  let errors = []
+  if (!email || !password) {
+    errors.push('Please complete all fields')
+  }
+  if (password.length < 6) {
+    errors.push('Invalid Password')
+  }
+  if (errors.length > 0) {
+    res.render('./auth/login', { errors, email, password })
+  }
+  else {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/auth/login',
+      failureFlash: true
+    })(req, res, next)
+  }
+})
+
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  req.flash('success_msg', 'Bạn đã đăng xuất thành công');
+  res.redirect('/')
+})
+
+
+router.get('/profile/:id', ensureAuthenticated, (req, res, next) => {
+  Users.findById(req.params.id)
+    .then(user => res.render('./auth/profile', { user }))
+    .catch(next)
+})
+router.post('/profile/:id', ensureAuthenticated, (req, res, next) => {
+  Users.findOneAndUpdate({ _id: req.params.id }, req.body)
+    .then((user) => {
+      res.redirect('back')
+    })
+    .catch(err => { })
+})
+
+
+router.get('/facebook',
+  passport.authenticate('facebook', { scope: 'email' }));
+
+router.get('/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/auth/login' }),
+  function (req, res) {
+    res.redirect('/home');
+  });
+
+router.get('/api/check-email-exist/:email', function (req, res, next) {
+  Users.findOne({ email: req.params.email })
+    .then(user => { res.json(!!user) })
+    .catch(next)
+});
+
+router.get('/forgot', function (req, res, next) {
+  res.render('./auth/forgot.ejs');
+});
+router.post('/forgot', function (req, res, next) {
+  const email = req.body.email
+  Users.findOne({ email: email })
+    .then(user => {
+      if (user) {
+        const token = jwt.sign({ email }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
+        console.log(token)
+        const data = {
+          from: 'noreply@gmail.com',
+          to: email,
+          subject: 'Reset Passwork Link',
+          html: `
+              <h2>Pleace click on given link to activate your account</h2>
+              <p></p>
+              <a href="${process.env.CLIENT_URL}/auth/forgot/${token}/${email}">Click link to reset password</a>
+            `
+        };
+        mg.messages().send(data, function (error, body) {
+          if (error) {
+            return res.json({
+              error: "Something went wrong while sent email"
+            })
+          } else {
+            req.flash('success_msg', 'Email has been sent')
+            res.redirect('/auth/forgot')
+          }
+        });
+
+      }
+      else {
+        req.flash('error_msg', 'Email is not registered')
+        res.redirect('/auth/forgot')
+      }
+    })
+    .catch(next)
+})
+
+router.get('/forgot/:tkn/:eml', function (req, res, next) {
+  res.render('./auth/inputNewPW.ejs', { email: req.params.eml });
+});
+
+router.post('/profile/pw/:id', ensureAuthenticated, (req, res, next) => {
+  Users.findOne({ _id: req.params.id })
+    .then(user => {
+      if (user) {
+        let errors = []
+        let success_msg = []
+        bcrypt.compare(req.body.curPassword, user.password, (err, isMatch) => {
+          if (err) throw err
+          if (isMatch) {
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(req.body.newPassword, salt, (err, hash) => {
+                if (err) throw err
+                Users.findOneAndUpdate({ _id: req.params.id }, { password: hash })
+                  .then(() => {
+                    success_msg.push('Change password successfully')
+                    res.render('./auth/profile', { success_msg })
+                  })
+                  .catch(err => { })
+              })
+            })
+          } else {
+            errors.push('Your old password was entered incorrectly. Please enter it again.')
+            res.render('./auth/profile', { errors })
+          }
+        })
+      }
+      else {
+        res.send("This account does not exist")
+      }
+    })
+    .catch(next)
+})
+
+
+router.post('/resetpw/:eml', (req, res, next) => {
+
+  Users.findOne({ email: req.params.eml })
+    .then(user => {
+
+      if (user) {
+        const {ePW, rePW} = req.body
+
+        if(ePW === rePW){
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(ePW, salt, (err, hash) => {
+              if (err) throw err
+              Users.findOneAndUpdate({ email: req.params.eml }, { password: hash })
+                .then(() => {
+                  success_msg.push('Reset password successfully')
+                  res.render('/auth/login', { success_msg })
+                })
+                .catch(err => { })
+            })
+          })
+        } else {
+          req.flash('error_msg', 'Please make sure both passwords match.')
+          res.redirect('back')
+        }
+      } else {
+        req.flash('error_msg', 'This email is not registered')
+        res.redirect('/auth/forgot')
+      }
+    })
+    .catch(next)
+})
+
+
+module.exports = router;
