@@ -1,0 +1,27 @@
+<body>
+    <div class="wrapper">
+        <h2>Order detail</h2>
+
+            <ul class="order-list">
+                <li class=order-item>
+                    <p class = "order-text">Mã đơn hàng</p>
+                    <p class = "order-text">Trạng thái đơn hàng</p>
+                    <p class = "order-text">Địa chỉ giao hàng</p>
+                    <p class = "order-text">Giá trị</p>
+                    <p class = "order-text">Thời gian đặt hàng</p>
+                </li>
+                <% for (var i=0; i < productList.length; i++) { %>
+                    <li class=order-item>
+                        <p class = "order-text">
+                            <%= productList[i].name %>
+                        </p>
+                        <p class = "order-text">
+                            <%= productList[i].price %>
+                        </p>
+                    </li>
+                    <% } %>
+            </ul>
+    </div>
+
+
+</body>

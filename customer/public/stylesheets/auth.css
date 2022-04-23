@@ -135,3 +135,18 @@
   .fa-cart-shopping {
     font-size: 28px;
   }
+
+  .order-item {
+    list-style: none;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .order-text {
+    min-width: 20%;
+  }

@@ -57,17 +57,26 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/checkout/:id', async (req, res, next) => {
   let orderId = null;
+  let newWallet = null;
+  await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}})
+  .then((doc) => {
+    newWallet = Number(doc.wallet) - Number(productOrder.total)
+    if (newWallet < 0) {
+      return;
+    }
+  });
   ordersCol.insertOne({
     address: req.body.address,
     totalPrice: productOrder.total,
     productList: productOrder.cartList,
     status: "pending",
+    iat: Date.now(),
   })
   .then(async (doc) => {
     orderId = doc.insertedId;
     await userCol.findOneAndUpdate( { _id: { $eq: ObjectId(req.params.id) } }, 
-                                    {$push : { "order": orderId }, $set: { "cart": [] } } )
-    res.redirect('/cart/:id')
+                                    {$push : { "order": orderId }, $set: { "cart": [], "wallet": newWallet } } )
+    res.redirect('/')
   });
 });
 

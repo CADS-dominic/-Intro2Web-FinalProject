@@ -1,0 +1,39 @@
+<body>
+    <link rel='stylesheet' href='/stylesheets/auth.css' />
+    <div class="wrapper">
+        <h2>Order List</h2>
+
+        <form method="POST" action="/auth/order/<%=user._id%>">
+            <ul class="order-list">
+                <li class=order-item>
+                    <p class = "order-text">Mã đơn hàng</p>
+                    <p class = "order-text">Trạng thái đơn hàng</p>
+                    <p class = "order-text">Địa chỉ giao hàng</p>
+                    <p class = "order-text">Giá trị</p>
+                    <p class = "order-text">Thời gian đặt hàng</p>
+                </li>
+                <% for (var i=0; i < orderList.length; i++) { %>
+                    <li class=order-item>
+                        <a class = "order-text" href="/auth/order/<%=user._id%>/detail/<%=orderList[i]._id%>">
+                            <%= orderList[i]._id %>
+                        </a>
+                        <p class = "order-text">
+                            <%= orderList[i].status %>
+                        </p>
+                        <p class = "order-text">
+                            <%= orderList[i].address %>
+                        </p>
+                        <p class = "order-text">
+                            <%= orderList[i].totalPrice %>
+                        </p>
+                        <p class = "order-text">
+                            <%= orderList[i].iat %>
+                        </p>
+                    </li>
+                    <% } %>
+            </ul>
+        </form>
+    </div>
+
+
+</body>

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const Users = require('../model/user')
+const Orders = require('../model/order')
+const Products = require('../model/product')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const { ensureAuthenticated } = require('../config/auth')
@@ -143,6 +145,55 @@ router.post('/profile/:id', ensureAuthenticated, (req, res, next) => {
     .catch(err => { })
 })
 
+router.get('/order/:id', ensureAuthenticated, (req, res, next) => {
+  Users.findOne({ _id: req.params.id }, req.body)
+    .then((user) => {
+      Orders.find({ _id: { $in: user.order } })
+        .then((result) => {
+          result.forEach((doc) => {
+            const date = new Date(Number(doc.iat));
+            doc.iat = `${date.toLocaleTimeString("en-us")}     ${date.toLocaleDateString("en-us")}`
+          })
+          const init = {
+            orderList: result,
+          }
+          res.render('./auth/order', init)
+        })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+})
+
+router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) => {
+  Orders.findOne({ _id: { $in: req.params.idOrder } })
+    .then(async (result) => {
+      const promise = new Promise((resolve, reject) => {
+        result.productList.forEach((item, index) => {
+          Products.findOne({ _id: item.id })
+            .then((doc) => {
+              item = {
+                quantity: item.quantity,
+                name: doc.name,
+                price: doc.price
+              }
+              if (index === result.productList.length - 1) {
+                resolve()
+              }
+            })
+        })
+      })
+        .then(() => {
+          res.render('./auth/orderDetail', { result })
+        })
+
+
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+})
 
 router.get('/facebook',
   passport.authenticate('facebook', { scope: 'email' }));

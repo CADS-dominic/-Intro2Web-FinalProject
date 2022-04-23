@@ -60,6 +60,8 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="/auth/profile/<%= user.id %> " style="color: black">See your profile</a></li>
                 <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/auth/order/<%= user.id %>" style="color: black">View order list</a></li>
+                <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="/auth/logout" style="color: black;">Log out</a></li>
               </ul>
             <% } else { %>
