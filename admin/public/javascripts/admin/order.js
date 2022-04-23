@@ -7,7 +7,7 @@ function loadOrders(response) {
 			<div class='account_item'>
                 <p>${doc.status}</p>
                 <p>${doc.address}</p>
-                <p>${doc.totalPrice}</p>
+                <p>${doc.totalPrice}$</p>
 				<a href='' id=${doc._id} class="account_details">Details</a>
 			</div>
 			<hr />`
