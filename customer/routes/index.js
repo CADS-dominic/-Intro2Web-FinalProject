@@ -39,6 +39,20 @@ router.get('/', async (req, res, next) => {
   res.render('index.ejs', init);
 });
 
+router.post('/paging-:skip', async (req, res, next) => {
+
+  const skip = req.params.skip;
+
+  const newProduct = [];
+
+  await productCol.find({category: {$eq: "New Product"}}).skip( skip ).limit(5).forEach((doc) => {
+    newProduct.push(doc);
+  });
+
+
+  res.send(newProduct);
+});
+
 router.get('/getProducts', async (req, res) => {
   let productList = [];
   await productCol.find({}).forEach((doc) => {
