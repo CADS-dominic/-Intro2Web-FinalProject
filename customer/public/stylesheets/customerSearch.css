@@ -16,6 +16,10 @@
   padding: 20px;
 }
 
+#form_filter label {
+  color: white;
+}
+
 #form_filter.active {
   display: block;
 }

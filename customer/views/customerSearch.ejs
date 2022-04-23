@@ -1,21 +1,47 @@
 <body>
     <link rel='stylesheet' href='/stylesheets/customerSearch.css' />
-    <div class="wrapper">
-        <form class="w-100" method="POST" action="/collections">
+    <div class="wrapper" style="background-color: black;">
+        <form class="w-100" method="POST" action="/<%=filter%>">
 
             <div class="component-header">
                 <h1>Result</h1>
                 <i class="fa-solid fa-filter" style="font-size: 32px; color: white;"></i>
                 <div id='form_filter'>
+                    <h1>Sort</h1>
+                    <select name="sort" id="sort">
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                        <option value="create">Create Time</option>
+                    <br>
+                    <h1>Category</h1>
+                    <label for="bestSeller">Best Seller</label>
+                    <input id="bestSeller" type="checkbox" name="bestSeller" value="Best Seller">
+                    <label for="bestSeller">New Product</label>
+                    <input id="newProduct" type="checkbox" name="newProduct" value="New Product">
                     <h1>Price:</h1>
-                    <input type='number' id='input_min-price' placeholder='Min price' />
-                    <input type='number' id='input_max-price' placeholder='Max price' />
-                    <div class="filterBtn">Filter</div>
+                    <input type='number' name="minPrice" id='input_min-price' placeholder='Min price' />
+                    <input type='number' name="maxPrice" id='input_max-price' placeholder='Max price' />
+                    <button class="filterBtn" type = "submit">Filter</button>
                 </div>
             </div>
 
             <ul class="result">
-
+                <% for(var i=0; i<result.length; i++) { %>
+  
+                    <li class="result-item">
+                      <a href="/detail/<%= result[i]._id %> ">
+                        <img src=<%=result[i].ava[0] %> alt="">
+                        <p class="result-item-name">
+                          <%= result[i].name %>
+                        </p>
+                        <div class="price-discount">
+                          <span class="result-price">
+                            <%=result[i].price %>
+                          </span>
+                        </div>
+                      </a>
+                    </li>
+                    <% } %>
             </ul>
             <div class="navigation">
                 <div class='prev'>Prev</div>
@@ -23,6 +49,16 @@
             </div>
         </form>
     </div>
-</body>
+    <script>
+        const $ = document.querySelector.bind(document);
+        const filterIco = $('.fa-filter');
+        const filterForm = $('#form_filter');
+        const filterBtn = $('.filterBtn');
+        let filterMax = $('#input_max-price');
+        let filterMin = $('#input_min-price');
+        filterIco.onclick = () => {
+        filterForm.classList.toggle('active');
+    }
 
-</html>
+    </script>
+</body>
