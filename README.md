@@ -18,4 +18,4 @@
 
 ## III. Checkout website
 
-- _This is website's url_
+- _https://sneaker-jeeps-admin.herokuapp.com_
