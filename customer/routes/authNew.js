@@ -50,12 +50,18 @@ router.post('/register', async (req, res, next) => {
               <h2>Pleace click on given link to activate your account</h2>
               <p>${process.env.CLIENT_URL}/auth/email-activate/${token}</p>
             `
-          };
+          }
+
+          const lnk = process.env.CLIENT_URL + "/auth/email-activate/" + token
+          console.log(lnk)
+
           mg.messages().send(data, function (error, body) {
             if (error) {
-              return res.json({
-                error: "Something went wrong while sent email"
-              })
+              // return res.json({
+              //   error: "Something went wrong while sent email"
+              // })
+              res.redirect('/auth/login')
+
             } else {
               req.flash('success_msg', 'Email has been sent, kindly activate your account')
               res.redirect('/auth/login')
@@ -168,7 +174,7 @@ router.post('/forgot', function (req, res, next) {
     .then(user => {
       if (user) {
         const token = jwt.sign({ email }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
-        console.log(token)
+        // console.log(token)
         const data = {
           from: 'noreply@gmail.com',
           to: email,
@@ -179,6 +185,8 @@ router.post('/forgot', function (req, res, next) {
               <a href="${process.env.CLIENT_URL}/auth/forgot/${token}/${email}">Click link to reset password</a>
             `
         };
+        const link = process.env.CLIENT_URL + "/auth/forgot/" + token + '/' + email
+        console.log(link)
         mg.messages().send(data, function (error, body) {
           if (error) {
             return res.json({
@@ -251,8 +259,8 @@ router.post('/resetpw/:eml', (req, res, next) => {
               if (err) throw err
               Users.findOneAndUpdate({ email: req.params.eml }, { password: hash })
                 .then(() => {
-                  success_msg.push('Reset password successfully')
-                  res.render('/auth/login', { success_msg })
+                  req.flash('success_msg','Reset password successfully')
+                  res.redirect('/auth/login')
                 })
                 .catch(err => { })
             })
