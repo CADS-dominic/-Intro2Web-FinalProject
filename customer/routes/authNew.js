@@ -175,22 +175,26 @@ router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) =
   Orders.findOne({ _id: { $in: req.params.idOrder } })
     .then(async (result) => {
       const promise = new Promise((resolve, reject) => {
+        const orderList = []
         result.productList.forEach((item, index) => {
           Products.findOne({ _id: item.id })
             .then((doc) => {
-              item = {
+              orderList.push({
                 quantity: item.quantity,
                 name: doc.name,
                 price: doc.price
-              }
+              })
               if (index === result.productList.length - 1) {
-                resolve()
+                resolve(orderList)
               }
             })
         })
       })
-        .then(() => {
-          res.render('./auth/orderDetail', { result })
+        .then((result) => {
+          const init = {
+            productList: result,
+          }
+          res.render('./auth/orderDetail', init )
         })
 
 
