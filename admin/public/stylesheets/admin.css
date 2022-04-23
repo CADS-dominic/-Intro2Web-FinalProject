@@ -212,6 +212,7 @@
   -ms-grid-columns: 30% 70%;
       grid-template-columns: 30% 70%;
   grid-gap: 10px;
+  height: 80vh;
 }
 
 .admin_container .admin_body .product_detailsContainer .product_detailsCard {
@@ -231,6 +232,16 @@
 .admin_container .admin_body .product_detailsContainer img {
   width: 100px;
   height: 100px;
+  border-radius: 10px;
+}
+
+.admin_container .admin_body .product_detailsContainer button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 10px;
+  height: 30px;
 }
 
 .admin_container .admin_body #add_form {
@@ -267,5 +278,38 @@
 
 .admin_container .admin_body #add_form button:hover {
   cursor: pointer;
+}
+
+.admin_container .admin_body .order_detailsContainer {
+  border: 1px solid black;
+  padding: 10px 10px;
+  border-radius: 15px;
+}
+
+.admin_container .admin_body .order_detailsContainer div {
+  margin-top: 15px;
+}
+
+.admin_container .admin_body .order_detailsContainer img {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+}
+
+.admin_container .admin_body .order_detailsContainer .order_itemContainer {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 15% 55% 15% 15%;
+      grid-template-columns: 15% 55% 15% 15%;
+  border: 1px solid #acacac;
+  margin: 10px 0;
+  border-radius: 15px;
+}
+
+.admin_container .admin_body .order_detailsContainer button {
+  border: none;
+  color: white;
+  padding: 5px 5px;
+  border-radius: 10px;
 }
 /*# sourceMappingURL=admin.css.map */

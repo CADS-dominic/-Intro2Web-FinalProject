@@ -31,11 +31,6 @@
 			<div class='sidebar_item'>
 				<i class='fa-solid fa-money-bills'></i>
 				<a href='/order'>Order</a>
-				<i class='fa-solid fa-caret-down'></i>
-				<div class='sidebar_subitem'>
-					<a href='/order'>View order list</a>
-					<a href='/order/update'>Update order status</a>
-				</div>
 			</div>
 			<div class='sidebar_item'>
 				<i class='fa-solid fa-right-from-bracket'></i>
@@ -49,10 +44,12 @@
 		<h1>Details</h1>
 		<hr />
 		<div class='product_detailsContainer'>
-			<div>
+			<div style='display: flex;flex-direction: column;overflow-y: scroll;'>
 				{{#each product.ava}}
-					<img src={{this}} alt='Avatar' class={{this}} />
-					<button class={{this}} onclick='remove(event)'>Remove</button>
+					<div>
+						<img src={{this}} alt='Avatar' class={{this}} />
+						<button class={{this}} onclick='remove(event)'>Remove</button>
+					</div>
 				{{/each}}
 			</div>
 			<div class='product_detailsCard'>
