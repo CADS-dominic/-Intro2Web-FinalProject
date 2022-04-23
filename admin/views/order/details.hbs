@@ -51,11 +51,11 @@
 				<div class='order_itemContainer'>
 					<img src={{this.ava}} alt='' />
 					<div>{{this.name}}</div>
-					<div>{{this.price}}</div>
+					<div>{{this.price}}$</div>
 					<div>x{{this.quantity}}</div>
 				</div>
 			{{/each}}
-			<div style='text-align: right;'><b>Total:</b> {{order.totalPrice}}</div>
+			<div style='text-align: right;'><b>Total:</b> {{order.totalPrice}}$</div>
 			<div style='text-align: right;'>
 				{{#if order.isPending}}
 					<button class='order_deli' id={{order._id}} style='background-color: #3298dc;'>Delivery</button>

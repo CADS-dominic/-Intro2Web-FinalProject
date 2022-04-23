@@ -1,7 +1,7 @@
 <body>
     <link rel='stylesheet' href='/stylesheets/customerCart.css' />
     <div class="wrapper">
-        <form class="w-100" method="POST" action="/cart/checkout/<%= user.id %>">
+        <form class="w-100" method="POST" action="/cart/checkout/<%= user.id %>" id="checkout_form">
 
             <ul class="cart-list">
 
@@ -22,7 +22,9 @@
                         </div>
                         <div class="amount">
                             <i class="fa-solid fa-minus"></i>
-                            <p><%=cart[i].quantity%></p>
+                            <p>
+                                <%=cart[i].quantity%>
+                            </p>
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </li>
@@ -36,8 +38,10 @@
                     <input name="address" type="text" class="address" placeholder="Enter your address: " required>
                 </div>
                 <div class="checkout">
-                    <h2 class = "total">Total: <%=total%></h2>
-                    <button type="submit" class = "checkout-btn">Checkout</button>
+                    <h2 class="total" id="paypal_total">Total: <%=total%>
+                    </h2>
+                    <button type="submit" class="checkout-btn">Checkout</button>
+                    <div id="paypal"></div>
                 </div>
             </div>
 
