@@ -18,6 +18,10 @@ router.get('/:id', async (req, res, next) => {
     cartList = doc.cart;
   });
 
+  cartList = cartList.sort((a, b) => {
+    return a.quantity - b.quantity;
+  });
+
   const promise = new Promise((resolve, reject) => {
     if (cartList.length == 0) reject();
     cartList.forEach(async (doc, index) => {
@@ -94,6 +98,10 @@ router.post('/:id/minus-:index', async (req, res, next) => {
     cartList = doc.cart;
   });
 
+  cartList = cartList.sort((a, b) => {
+    return a.quantity - b.quantity;
+  });
+
   cartList[req.params.index].quantity = Number(cartList[req.params.index].quantity) - 1;
 
   await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
@@ -103,7 +111,6 @@ router.post('/:id/minus-:index', async (req, res, next) => {
     cartList.forEach(async (doc, i) => {
       await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } })
       .then((product) => {
-        console.log(product);
         cart.push({
           product,
           quantity: doc.quantity
@@ -112,7 +119,6 @@ router.post('/:id/minus-:index', async (req, res, next) => {
           cart = cart.sort((a, b) => {
             return a.quantity - b.quantity;
           });
-          console.log(cart);
           resolve(cart)
         }
       })
@@ -149,6 +155,10 @@ router.post('/:id/plus-:index', async (req, res, next) => {
     cartList = doc.cart;
   });
 
+  cartList = cartList.sort((a, b) => {
+    return a.quantity - b.quantity;
+  });
+
   cartList[req.params.index].quantity = Number(cartList[req.params.index].quantity) + 1;
 
   await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
@@ -158,7 +168,6 @@ router.post('/:id/plus-:index', async (req, res, next) => {
     cartList.forEach(async (doc, i) => {
       await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } })
       .then((product) => {
-        console.log(product);
         cart.push({
           product,
           quantity: doc.quantity
@@ -167,7 +176,6 @@ router.post('/:id/plus-:index', async (req, res, next) => {
           cart = cart.sort((a, b) => {
             return a.quantity - b.quantity;
           });
-          console.log(cart);
           resolve(cart)
         }
       })
