@@ -4,9 +4,6 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const Users = require('../model/user')
 
-const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox71d8deceebb44a52925ee8dd24ae2c2d.mailgun.org';
-const mg = mailgun({apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN}); 
 
 module.exports = function(passport) {
     passport.use( 

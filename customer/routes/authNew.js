@@ -10,9 +10,7 @@ const { ensureAuthenticated } = require('../config/auth')
 const cloudinary = require('../config/cloudinary')
 const nodemailer = require('nodemailer')
 
-const mailgun = require("mailgun-js");
-const DOMAIN = process.env.MAILGUN_DOMAIN;
-const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
+
 
 async function sendVerifyMail(email, url, token) {
 	let transporter = nodemailer.createTransport({
@@ -90,6 +88,8 @@ router.post('/register', async (req, res, next) => {
           const token = jwt.sign({ name, email, password }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
           
           sendVerifyMail(email, req.protocol + '://' + req.get('host'),token)
+          console.log(email, req.protocol + '://' + req.get('host'),token)
+
           req.flash('success_msg', 'Email has been sent, kindly activate your account')
           res.redirect('/auth/login')
         }
@@ -346,7 +346,6 @@ router.post('/imgAva', async (req, res, next) => {
 
   Users.findOneAndUpdate({ email: req.body.email }, {ava: cloudinaryResponse.url})
     .then((user) => {
-      res.send("I check")
       req.flash('success_msg', "Image uploaded successfully")
       res.redirect('back')
     })

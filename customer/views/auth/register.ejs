@@ -61,7 +61,6 @@
   <script>
     $(function () {
       $('#name').on('input', function () {
-        console.log(this.value)
         if (this.value.match(/[a-zA-Z]{3,}(?: [a-zA-Z]+)?(?: [a-zA-Z]+)?$/)) {
           $('#name').removeClass('is-invalid')
           $('#name').addClass('is-valid')
