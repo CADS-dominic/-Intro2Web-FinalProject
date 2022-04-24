@@ -21,7 +21,6 @@ async function sendVerifyMail(username, url) {
 		subject: 'Verify your mail',
 		html: `<a href='${url}/signup/verified?username=${username}'>Click this link to verify your mail</a>`,
 	})
-	//console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
 }
 
 router.get('/', passport.checkNotAuth, function (req, res) {

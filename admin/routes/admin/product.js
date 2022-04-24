@@ -81,7 +81,6 @@ router.post('/next', async (req, res) => {
 	let products = []
 	if (input == undefined) {
 		await productCollection.find({}).forEach((doc) => {
-			console.log(doc)
 			products.push({ ...doc, ava: doc.ava[0] })
 		})
 	} else {
@@ -299,9 +298,6 @@ router.post('/remove', async (req, res) => {
 	const public_id = req.body.url.split('/').at(-1),
 		id = req.body.id
 	try {
-		// await cloudinary.api.delete_resources(public_id, (err, res) => {
-		// 	console.log(err, res)
-		// })
 		await productCollection.updateOne(
 			{ _id: ObjectId(id) },
 			{

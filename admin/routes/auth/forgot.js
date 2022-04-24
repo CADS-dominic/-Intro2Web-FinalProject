@@ -21,7 +21,6 @@ async function sendForgotMail(username, url) {
 		subject: 'Reset your password',
 		html: `<a href='${url}/forgot/form?username=${username}'>Click this link to reset your password</a>`,
 	})
-	//console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
 }
 
 router.get('/', passport.checkNotAuth, function (req, res) {

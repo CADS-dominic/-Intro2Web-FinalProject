@@ -43,8 +43,6 @@ module.exports = function(passport) {
                 return cb(err);
  
             if (user) {
-                console.log("user found")
-                console.log(user)
                 return cb(null, user);
             } else {
                 var newUser = new Users({});
@@ -63,11 +61,6 @@ module.exports = function(passport) {
             }
  
         });
-
-        // console.log(profile)
-        // return cb(null, profile);
-
-
       }
     ));
 

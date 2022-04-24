@@ -88,7 +88,6 @@ router.post('/register', async (req, res, next) => {
           const token = jwt.sign({ name, email, password }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
           
           sendVerifyMail(email, req.protocol + '://' + req.get('host'),token)
-          console.log(email, req.protocol + '://' + req.get('host'),token)
 
           req.flash('success_msg', 'Email has been sent, kindly activate your account')
           res.redirect('/auth/login')
@@ -214,7 +213,6 @@ router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) =
         })
       })
         .then((result) => {
-          console.log(result);
           const init = {
             productList: result,
           }
