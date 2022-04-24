@@ -18,18 +18,29 @@ router.get('/', async (req, res, next) => {
         ...doc,
         products
       })
-      if (index === brandName.length - 1) {
+      if (brand.length === brandName.length) {
+        brand = brand.sort((a, b) => {
+          const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+          const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        })
         resolve(brand)
       }
     })
   })
-  .then((brand) => {
-    const init = {
-      brand: brand,
-    }
-  
-    res.render('customerCollections.ejs', init);
-  })
+    .then((brand) => {
+      const init = {
+        brand: brand,
+      }
+
+      res.render('customerCollections.ejs', init);
+    })
 
 });
 
