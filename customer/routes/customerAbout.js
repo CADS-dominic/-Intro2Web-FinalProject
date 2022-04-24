@@ -14,14 +14,14 @@ router.get('/', function(req, res, next) {
       {
         name: 'Vu Duc Quang Huy',
         age: '21',
-        phone: '0915871099',
+        phone: '0999999999',
         avt: "../public/images/avatar.jpg",
       },
 
       {
         name: 'Tran Bao Phu',
         age: '21',
-        phone: '0915871099',
+        phone: '0973572130',
         avt: "../public/images/avatar.jpg",
     }
   ]
