@@ -5,12 +5,56 @@ const Orders = require('../model/order')
 const Products = require('../model/product')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const { ensureAuthenticated } = require('../config/auth')
 const jwt = require('jsonwebtoken')
+const { ensureAuthenticated } = require('../config/auth')
+const cloudinary = require('../config/cloudinary')
+const nodemailer = require('nodemailer')
 
 const mailgun = require("mailgun-js");
 const DOMAIN = process.env.MAILGUN_DOMAIN;
 const mg = mailgun({ apiKey: process.env.MAILGUN_APIKEY, domain: DOMAIN });
+
+async function sendVerifyMail(email, url, token) {
+	let transporter = nodemailer.createTransport({
+		service: 'gmail',
+		host: 'smtp.gmail.com',
+		auth: {
+			user: process.env.EMAIL,
+			pass: process.env.PASSWORD,
+		},
+	})
+	let info = await transporter.sendMail({
+		from: 'SneakerJeeps@gmail.com',
+		to: email,
+		subject: 'Verify your mail',
+		html:`
+      <a href="${url}/auth/email-activate/${token}">Pleace click on given link to activate your account</a>
+    `
+    
+	})
+}
+
+async function sendForgotMail(email, url, token) {
+	let transporter = nodemailer.createTransport({
+		service: 'gmail',
+		host: 'smtp.gmail.com',
+		auth: {
+			user: process.env.EMAIL,
+			pass: process.env.PASSWORD,
+		},
+	})
+	let info = await transporter.sendMail({
+		from: 'SneakerJeeps@gmail.com',
+		to: email,
+		subject: 'Reset Your Password',
+		html:`
+      <a href="${url}/auth/forgot/${token}/${email}">Click link to reset password</a>
+    `
+    
+	})
+}
+
+
 
 router.get('/login', function (req, res, next) {
   res.render('./auth/login.ejs');
@@ -44,31 +88,10 @@ router.post('/register', async (req, res, next) => {
         }
         else {
           const token = jwt.sign({ name, email, password }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
-          const data = {
-            from: 'noreply@gmail.com',
-            to: email,
-            subject: 'Account Activation Link',
-            html: `
-              <h2>Pleace click on given link to activate your account</h2>
-              <p>${process.env.CLIENT_URL}/auth/email-activate/${token}</p>
-            `
-          }
-
-          const lnk = process.env.CLIENT_URL + "/auth/email-activate/" + token
-          console.log(lnk)
-
-          mg.messages().send(data, function (error, body) {
-            if (error) {
-              // return res.json({
-              //   error: "Something went wrong while sent email"
-              // })
-              res.redirect('/auth/login')
-
-            } else {
-              req.flash('success_msg', 'Email has been sent, kindly activate your account')
-              res.redirect('/auth/login')
-            }
-          });
+          
+          sendVerifyMail(email, req.protocol + '://' + req.get('host'),token)
+          req.flash('success_msg', 'Email has been sent, kindly activate your account')
+          res.redirect('/auth/login')
         }
 
       })
@@ -88,7 +111,7 @@ router.get('/email-activate/:tok', (req, res, next) => {
       } else {
         const { name, email, password } = decodedToken
 
-        const { order, cart, ava, ban, iat, wallet } = { order: [], cart: [], ava: '', ban: false, iat: Date.now(), wallet: 10000 }
+        const { order, cart, ava, ban, iat, wallet } = { order: [], cart: [], ava: 'https://thelifetank.com/wp-content/uploads/2018/08/avatar-default-icon.png', ban: false, iat: Date.now(), wallet: 10000 }
         const newUser = new Users({ name, email, password, order, cart, ava, ban, iat, wallet });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -194,7 +217,7 @@ router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) =
           const init = {
             productList: result,
           }
-          res.render('./auth/orderDetail', init )
+          res.render('./auth/orderDetail', init)
         })
 
 
@@ -229,29 +252,10 @@ router.post('/forgot', function (req, res, next) {
     .then(user => {
       if (user) {
         const token = jwt.sign({ email }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' })
-        // console.log(token)
-        const data = {
-          from: 'noreply@gmail.com',
-          to: email,
-          subject: 'Reset Passwork Link',
-          html: `
-              <h2>Pleace click on given link to activate your account</h2>
-              <p></p>
-              <a href="${process.env.CLIENT_URL}/auth/forgot/${token}/${email}">Click link to reset password</a>
-            `
-        };
-        const link = process.env.CLIENT_URL + "/auth/forgot/" + token + '/' + email
-        console.log(link)
-        mg.messages().send(data, function (error, body) {
-          if (error) {
-            return res.json({
-              error: "Something went wrong while sent email"
-            })
-          } else {
-            req.flash('success_msg', 'Email has been sent')
-            res.redirect('/auth/forgot')
-          }
-        });
+        sendForgotMail(email, req.protocol + '://' + req.get('host'),token)
+        
+        req.flash('success_msg', 'Email has been sent')
+        res.redirect('/auth/forgot')
 
       }
       else {
@@ -306,15 +310,15 @@ router.post('/resetpw/:eml', (req, res, next) => {
     .then(user => {
 
       if (user) {
-        const {ePW, rePW} = req.body
+        const { ePW, rePW } = req.body
 
-        if(ePW === rePW){
+        if (ePW === rePW) {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(ePW, salt, (err, hash) => {
               if (err) throw err
               Users.findOneAndUpdate({ email: req.params.eml }, { password: hash })
                 .then(() => {
-                  req.flash('success_msg','Reset password successfully')
+                  req.flash('success_msg', 'Reset password successfully')
                   res.redirect('/auth/login')
                 })
                 .catch(err => { })
@@ -332,5 +336,20 @@ router.post('/resetpw/:eml', (req, res, next) => {
     .catch(next)
 })
 
+router.post('/imgAva', async (req, res, next) => {
+  // res.send({email: req.body.email})
+
+  const cloudinaryResponse = await cloudinary.uploader.upload(req.body.ava, {
+    upload_preset: 'avatars',
+  })
+
+  Users.findOneAndUpdate({ email: req.body.email }, {ava: cloudinaryResponse.url})
+    .then((user) => {
+      res.send("I check")
+      req.flash('success_msg', "Image uploaded successfully")
+      res.redirect('back')
+    })
+    .catch(err => { })
+})
 
 module.exports = router;

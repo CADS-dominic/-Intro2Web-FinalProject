@@ -1,8 +1,10 @@
 <body>
-  <%- include ('./msgAlert'); %>
 
     <div class="container mt-8 mb-4" style="margin-top: 200px;">
+
       <h2>View Profile</h2>
+      <%- include ('./msgAlert'); %>
+
       <table class="table">
         <thead>
           <tr>
@@ -63,6 +65,18 @@
           <button id="adChange" type="submit" class="btn btn-primary" disabled="disabled">Change</button>
         </div>
       </form>
+
+      <div class="dropdown-divider mt-4"></div>
+
+      
+      <h2 class="mt-4">Change Avatar</h2>
+      <form action="" class="formAvatar" method="POST" id="<%= user.email %>">
+        <input type="file" id="upImg">
+        <div class="mt-4">
+          <button class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+
 
     </div>
 
@@ -140,9 +154,38 @@
             $('#newPassword').removeClass('is-valid')
           }
         })
+
+
+        let image = null
+        $('#upImg').change(function (e) {
+          const file = e.target.files[0]
+          const reader = new FileReader()
+          reader.readAsDataURL(file)
+          reader.onloadend = () => {
+            img = reader.result
+          }
+        })
+
+        $('.formAvatar').submit(function (e) {
+          // e.preventDefault()
+          fetch(window.location.origin + '/auth/imgAva/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ava: img,
+              email: e.target.id,
+            }),
+          })
+          
+
+        })
+
       })
 
 
-
     </script>
+
+
 </body>
