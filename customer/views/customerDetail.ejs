@@ -1,5 +1,5 @@
 <body>
-    <div class="container">
+    <div class="container mt-8" style="margin-top: 150px;">
         <section id="prodetails" class="section-p1">
             <div class="single-pro-img">
                 <img src="<%=pro.ava[0]%>" id="MainImg" width="100%" alt="">
@@ -7,28 +7,35 @@
             <% var name='' %>
                 <% if (!user) { %>
                     <% iduser="guest" ;%>
-                        <% } else { %>
-                            <% iduser=user._id } %>
-                                <form action="/detail/add/<%=pro._id%>-<%= iduser %>" method="POST">
-                                    <div class="single-pro-details">
-                                        <h2 id="MainName">
-                                            <%=pro.name%>
-                                        </h2>
-                                        <h2 id="MainPrice">
-                                            <%=pro.price%>
-                                        </h2>
+                <% } else { %>
+                <% iduser=user._id } %>
 
-                                        <p>Brand: <%= pro.brand %>
-                                        </p>
-                                        <input type="number" name="quantity" id="" value="1" min="1">
-                                        <button class="normal" type="submit">Add To Cart</button>
-                                        <h4>Product Details</h4>
-                                        <span>
-                                            <%=pro.description%>
-                                        </span>
+                <form action="/detail/add/<%=pro._id%>-<%= iduser %>" method="POST">
+                    <div class="single-pro-details">
+                        <h2>
+                            <%=pro.name%>
+                        </h2>
+                        <div class="dropdown-divider"></div>
 
-                                    </div>
-                                </form>
+                        <h2 class="text-muted">
+                            <%=pro.price%>$
+                        </h2>
+                        <div class="dropdown-divider"></div>
+                        <p>Brand: <%= pro.brand %>
+                        <div class="dropdown-divider"></div>
+                        </p>
+                        <input type="number" name="quantity" id="" value="1" min="1">
+                        <button class="normal" type="submit">Add To Cart</button>
+                        <div class="dropdown-divider"></div>
+
+                        <!-- <h4></h4> -->
+                        <p class="text-muted">Description</p> 
+                        <span>
+                            <%=pro.description%>
+                        </span>
+                    </div>
+                </form>
+
         </section>
 
 
@@ -47,11 +54,12 @@
                                         <%= sPro.name %>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 text-muted">
+                                        <%= sPro.price %>$
+                                    </h6>
+                                    <h6 class="card-subtitle mb-2 text-muted">
                                         <%= sPro.brand %>
                                     </h6>
-                                    <p class="card-text">
-                                        <%= sPro.description %>
-                                    </p>
+                                    
                                 </div>
                             </div>
                         </a>
@@ -59,7 +67,8 @@
                     <% }) %>
         </div>
 
-        <div class="dropdown-divider mb-4"></div>
+        <div class="dropdown-divider mt-4 mb-4"></div>
+
         <div class="cmt">
             <h3>Customer Review</h3>
             <% var name='' %>
