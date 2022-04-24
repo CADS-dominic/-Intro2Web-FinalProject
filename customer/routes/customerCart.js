@@ -11,7 +11,7 @@ let productOrder = [];
 
 router.get('/:id', async (req, res, next) => {
 
-  const cart = [];
+  let cart = [];
   let cartList = [];
 
   await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}}).then((doc) => {
@@ -21,14 +21,20 @@ router.get('/:id', async (req, res, next) => {
   const promise = new Promise((resolve, reject) => {
     if (cartList.length == 0) reject();
     cartList.forEach(async (doc, index) => {
-      const product = await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } });
-      cart.push({
-        product,
-        quantity: doc.quantity
+      await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } })
+      .then((product) => {
+        cart.push({
+          product,
+          quantity: doc.quantity
+        })
+        if (cart.length == cartList.length) {
+          cart = cart.sort((a, b) => {
+            return a.quantity - b.quantity;
+          });
+          resolve(cart)
+        }
       })
-      if (index === cartList.length - 1) {
-        resolve(cart)
-      }
+      
     })
   })
   .then((cart) => {
@@ -81,7 +87,7 @@ router.post('/checkout/:id', async (req, res, next) => {
 });
 
 router.post('/:id/minus-:index', async (req, res, next) => {
-  const cart = [];
+  let cart = [];
   let cartList = [];
 
   await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}}).then((doc) => {
@@ -93,16 +99,23 @@ router.post('/:id/minus-:index', async (req, res, next) => {
   await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
 
   const promise = new Promise((resolve, reject) => {
-    if (cartList.length == 0) reject();
-    cartList.forEach(async (doc, index) => {
-      const product = await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } });
-      cart.push({
-        product,
-        quantity: doc.quantity
+    if (cartList.length == 0) reject();    
+    cartList.forEach(async (doc, i) => {
+      await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } })
+      .then((product) => {
+        console.log(product);
+        cart.push({
+          product,
+          quantity: doc.quantity
+        })
+        if (cart.length == cartList.length) {
+          cart = cart.sort((a, b) => {
+            return a.quantity - b.quantity;
+          });
+          console.log(cart);
+          resolve(cart)
+        }
       })
-      if (index === cartList.length - 1) {
-        resolve(cart)
-      }
     })
   })
   .then((cart) => {
@@ -129,7 +142,7 @@ router.post('/:id/minus-:index', async (req, res, next) => {
 });
 
 router.post('/:id/plus-:index', async (req, res, next) => {
-  const cart = [];
+  let cart = [];
   let cartList = [];
 
   await userCol.findOne({_id: {$eq: ObjectId(req.params.id)}}).then((doc) => {
@@ -141,16 +154,23 @@ router.post('/:id/plus-:index', async (req, res, next) => {
   await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
 
   const promise = new Promise((resolve, reject) => {
-    if (cartList.length == 0) reject();
-    cartList.forEach(async (doc, index) => {
-      const product = await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } });
-      cart.push({
-        product,
-        quantity: doc.quantity
+    if (cartList.length == 0) reject();    
+    cartList.forEach(async (doc, i) => {
+      await productCol.findOne({ _id: { $eq: ObjectId(doc.id) } })
+      .then((product) => {
+        console.log(product);
+        cart.push({
+          product,
+          quantity: doc.quantity
+        })
+        if (cart.length == cartList.length) {
+          cart = cart.sort((a, b) => {
+            return a.quantity - b.quantity;
+          });
+          console.log(cart);
+          resolve(cart)
+        }
       })
-      if (index === cartList.length - 1) {
-        resolve(cart)
-      }
     })
   })
   .then((cart) => {
