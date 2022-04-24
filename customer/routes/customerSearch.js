@@ -21,7 +21,6 @@ router.get('/:value', async (req, res, next) => {
 });
 
 async function query(value, sort) {
-  console.log(sort);
   switch(sort) {
     case "name":
       return await productCol.find({ name: { $regex: new RegExp(value) } }).sort( { name: 1 } ).toArray();

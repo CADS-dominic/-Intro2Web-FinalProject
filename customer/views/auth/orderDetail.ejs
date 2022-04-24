@@ -7,6 +7,7 @@
                 <li class=order-item>
                     <p class = "order-text">Danh sách sản phẩm</p>
                     <p class = "order-text">Đơn giá</p>
+                    <p class = "order-text">Số lượng</p>
                 </li>
                 <% for (var i=0; i < productList.length; i++) { %>
                     <li class=order-item>
@@ -15,6 +16,9 @@
                         </p>
                         <p class = "order-text">
                             <%= productList[i].price %>
+                        </p>
+                        <p class = "order-text">
+                            <%= productList[i].quantity %>
                         </p>
                     </li>
                     <% } %>

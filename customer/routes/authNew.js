@@ -214,6 +214,7 @@ router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) =
         })
       })
         .then((result) => {
+          console.log(result);
           const init = {
             productList: result,
           }
