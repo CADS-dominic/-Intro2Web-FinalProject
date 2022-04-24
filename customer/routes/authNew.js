@@ -207,7 +207,7 @@ router.get('/order/:id/detail/:idOrder', ensureAuthenticated, (req, res, next) =
                 name: doc.name,
                 price: doc.price
               })
-              if (index === result.productList.length - 1) {
+              if (orderList.length === result.productList.length) {
                 resolve(orderList)
               }
             })

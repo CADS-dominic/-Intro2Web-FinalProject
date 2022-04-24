@@ -48,103 +48,53 @@
 
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
-        function minusClick() {
-            const minus = document.querySelector(".fa-minus");
-            const cartList = document.querySelector('.cart-list');
-            const total = document.querySelector('#paypal_total');
-            const event = minus.addEventListener("click", ((e) => {
-                var xhttp = new XMLHttpRequest()
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        const data = JSON.parse(xhttp.responseText);
-                        cartList.innerHTML = '';
-                        data.cart.forEach((element, index) => {
-                            cartList.innerHTML += `
-                        <li class="cart-item">
-                            <img src=${element.product.ava[0]} alt="">
+        const minus = document.querySelectorAll(".fa-minus");
+        const plus = document.querySelectorAll(".fa-plus");
+        const cartList = document.querySelector('.cart-list');
+        const total = document.querySelector('#paypal_total');
+        const quantity = document.querySelectorAll('.quantity');
 
-                            <div class="info">
-                                <p class="item-name">
-                                    ${element.product.name}
-                                </p>
-                                <div class="price-discount">
-                                    <span class="price">
-                                        ${element.product.price}
-                                    </span>
-                                </div>
-                            </div>
-                            <div data-index=${index} class="amount">
-                                <i class="fa-solid fa-minus"></i>
-                                <p class="quantity">
-                                    ${element.quantity}
-                                </p>
-                                <i class="fa-solid fa-plus"></i>
-                            </div>
-                        </li>
-                        `
-                        })
-                        total.innerText = data.total;
-                        minusClick();
-                        plusClick();
+        function quantityClick() {
+            minus.forEach(element => {
+                element.addEventListener('click', ((e) => {
+                    var xhttp = new XMLHttpRequest()
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const data = JSON.parse(xhttp.responseText);
+                            quantity[e.target.parentNode.dataset.index].innerText = data.cart[e.target.parentNode.dataset.index].quantity;
+                            if (quantity[e.target.parentNode.dataset.index].innerText == 0) {
+                                cartList.removeChild(e.target.parentNode.parentNode);
+                            }
+                            total.innerText = data.total;
+                        }
                     }
-                }
-                xhttp.open('POST', window.location.href + `/minus-${e.target.parentNode.dataset.index}`, true)
-                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-                xhttp.send();
-            }));
-        }
-        minusClick();
+                    xhttp.open('POST', window.location.href + `/minus-${e.target.parentNode.dataset.index}`, true)
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+                    xhttp.send();
+                }))
+            })
 
-        function plusClick() {
-            const plus = document.querySelector(".fa-plus");
-            const cartList = document.querySelector('.cart-list');
-            const total = document.querySelector('#paypal_total');
-            const event = plus.addEventListener("click", ((e) => {
-                var xhttp = new XMLHttpRequest()
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        const data = JSON.parse(xhttp.responseText);
-                        cartList.innerHTML = '';
-                        data.cart.forEach((element, index) => {
-                            cartList.innerHTML += `
-                        <li class="cart-item">
-                            <img src=${element.product.ava[0]} alt="">
-
-                            <div class="info">
-                                <p class="item-name">
-                                    ${element.product.name}
-                                </p>
-                                <div class="price-discount">
-                                    <span class="price">
-                                        ${element.product.price}
-                                    </span>
-                                </div>
-                            </div>
-                            <div data-index=${index} class="amount">
-                                <i class="fa-solid fa-minus"></i>
-                                <p class="quantity">
-                                    ${element.quantity}
-                                </p>
-                                <i class="fa-solid fa-plus"></i>
-                            </div>
-                        </li>
-                        `
-                        })
-                        total.innerText = data.total;
-                        plusClick();
-                        minusClick();
-
+            plus.forEach(element => {
+                element.addEventListener('click', ((e) => {
+                    var xhttp = new XMLHttpRequest()
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const data = JSON.parse(xhttp.responseText);
+                            quantity[e.target.parentNode.dataset.index].innerText = data.cart[e.target.parentNode.dataset.index].quantity;
+                            if (quantity[e.target.parentNode.dataset.index].innerText == 0) {
+                                cartList.removeChild(e.target.parentNode.parentNode);
+                            }
+                            total.innerText = data.total;
+                        }
                     }
-                }
-                xhttp.open('POST', window.location.href + `/plus-${e.target.parentNode.dataset.index}`, true)
-                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-                xhttp.send();
-            }));
+                    xhttp.open('POST', window.location.href + `/plus-${e.target.parentNode.dataset.index}`, true)
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+                    xhttp.send();
+                }))
+            })
         }
-        plusClick();
+        quantityClick();
 
     </script>
 </body>
