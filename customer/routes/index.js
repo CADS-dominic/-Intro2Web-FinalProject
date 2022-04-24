@@ -22,7 +22,10 @@ router.get('/', async (req, res, next) => {
     bestSeller.push(doc);
   });
 
-  await productCol.find({category: {$eq: "New Product"}}).forEach((doc) => {
+  let size = await productCol.find({category: {$eq: "New Product"}}).count();
+  size = Math.ceil(size/5);
+
+  await productCol.find({category: {$eq: "New Product"}}).limit(5).forEach((doc) => {
     newProduct.push(doc);
   });
 
@@ -34,6 +37,7 @@ router.get('/', async (req, res, next) => {
     bestSeller: bestSeller,
     newProduct: newProduct,
     brand: brand,
+    size: size,
   };
 
   res.render('index.ejs', init);
@@ -41,16 +45,22 @@ router.get('/', async (req, res, next) => {
 
 router.post('/paging-:skip', async (req, res, next) => {
 
-  const skip = req.params.skip;
+  const skip = Number(req.params.skip);
 
   const newProduct = [];
+
+  let size = await productCol.find({category: {$eq: "New Product"}}).count();
+  size = Math.ceil(size/5);
 
   await productCol.find({category: {$eq: "New Product"}}).skip( skip ).limit(5).forEach((doc) => {
     newProduct.push(doc);
   });
 
+  const init = {
+    newProduct: newProduct,
+  }
 
-  res.send(newProduct);
+  res.send(init);
 });
 
 router.get('/getProducts', async (req, res) => {

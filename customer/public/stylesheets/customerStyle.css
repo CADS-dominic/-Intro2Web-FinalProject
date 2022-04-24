@@ -175,22 +175,13 @@ h1 {
   cursor: pointer;
 }
 
-.navigation .prev {
+.navigation .page {
   padding: 20px;
+  margin: 0 12px;
   background-color: #fff;
   color: black;
 }
 
-.navigation .prev:hover {
-  background-color: #ccc;
-}
-
-.navigation .next {
-  padding: 20px;
-  background-color: #fff;
-  color: black;
-}
-
-.navigation .next:hover {
+.navigation .page:hover {
   background-color: #ccc;
 }
