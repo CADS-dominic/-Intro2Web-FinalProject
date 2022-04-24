@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "cloudinary": "^1.29.1",
-    "nodemailer": "^6.7.3"
-  }
-}
