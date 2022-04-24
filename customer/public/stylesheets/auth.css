@@ -148,5 +148,7 @@
   }
 
   .order-text {
+    text-align: center;
+    margin: 0;
     min-width: 20%;
   }
