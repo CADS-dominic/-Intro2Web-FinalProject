@@ -63,7 +63,7 @@
                         if (this.readyState == 4 && this.status == 200) {
                             const data = JSON.parse(xhttp.responseText);
                             quantity[e.target.parentNode.dataset.index].innerText = data.cart[e.target.parentNode.dataset.index].quantity;
-                            if (quantity[e.target.parentNode.dataset.index].innerText == 0) {
+                            if (quantity[e.target.parentNode.dataset.index].innerText <= 0) {
                                 cartList.removeChild(e.target.parentNode.parentNode);
                             }
                             total.innerText = data.total;

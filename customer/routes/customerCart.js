@@ -103,8 +103,15 @@ router.post('/:id/minus-:index', async (req, res, next) => {
   });
 
   cartList[req.params.index].quantity = Number(cartList[req.params.index].quantity) - 1;
+  cartUpdate = [
+    ...cartList,
+  ]
 
-  await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartList } })
+  if (cartUpdate[req.params.index].quantity <= 0) {
+    cartUpdate.splice(req.params.index, 1);
+  }
+
+  await userCol.updateOne({_id: ObjectId(req.params.id)}, { $set: { "cart": cartUpdate } })
 
   const promise = new Promise((resolve, reject) => {
     if (cartList.length == 0) reject();    
