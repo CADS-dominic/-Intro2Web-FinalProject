@@ -1,7 +1,7 @@
 <body>
     <link rel='stylesheet' href='/stylesheets/customerCart.css' />
     <div class="wrapper">
-        <form class="w-100" method="POST" action="/cart/checkout/<%= user.id %>" id="checkout_form">
+        
 
             <ul class="cart-list">
 
@@ -35,18 +35,17 @@
 
             <div class="payment">
                 <div class="inputShipping">
-                    <input name="address" type="text" class="address" placeholder="Enter your address: " required>
+                    <input value="" name="address" type="text" class="address" placeholder="Enter your address: " required>
                 </div>
                 <div class="checkout">
-                    <h2 class="total" id="paypal_total">Total: <%=total%>
-                    </h2>
-                    <button type="submit" class="checkout-btn">Checkout</button>
+                    <h2 class="total" id="paypal_total">Total: <%=total%> </h2>
+                    <h2 class="total" id="paypal_total">Your Wallet: <%=wallet%> </h2>
+                    <input id="notify" value = "<%=notify%>" disabled>
+                    <button class="checkout-btn">Checkout</button>
                     <div id="paypal"></div>
                 </div>
             </div>
 
-
-        </form>
     </div>
     <script>
         const minus = document.querySelectorAll(".fa-minus");
@@ -54,6 +53,9 @@
         const cartList = document.querySelector('.cart-list');
         const total = document.querySelector('#paypal_total');
         const quantity = document.querySelectorAll('.quantity');
+        const notify = document.querySelector('#notify');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const address = document.querySelector('.address');
 
         function quantityClick() {
             minus.forEach(element => {
@@ -66,7 +68,7 @@
                             if (quantity[e.target.parentNode.dataset.index].innerText <= 0) {
                                 cartList.removeChild(e.target.parentNode.parentNode);
                             }
-                            total.innerText = data.total;
+                            total.innerText = `Total: ${data.total}`;
                         }
                     }
                     xhttp.open('POST', window.location.href + `/minus-${e.target.parentNode.dataset.index}`, true)
@@ -85,7 +87,7 @@
                             if (quantity[e.target.parentNode.dataset.index].innerText == 0) {
                                 cartList.removeChild(e.target.parentNode.parentNode);
                             }
-                            total.innerText = data.total;
+                            total.innerText = `Total: ${data.total}`;
                         }
                     }
                     xhttp.open('POST', window.location.href + `/plus-${e.target.parentNode.dataset.index}`, true)
@@ -94,7 +96,24 @@
                 }))
             })
         }
+        function checkout() {
+            checkoutBtn.onclick = () => {
+
+                var xhttp = new XMLHttpRequest()
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const data = JSON.parse(xhttp.responseText);
+                            notify.value = data.notify;
+                        }
+                    }
+                    xhttp.open('POST', `/cart/checkout/<%= user.id %>`, true)
+                    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+                    xhttp.send(`address=${address.value}`);
+            }
+        }
         quantityClick();
+        checkout();
+
 
     </script>
 </body>
