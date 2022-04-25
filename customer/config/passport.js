@@ -34,7 +34,7 @@ module.exports = function(passport) {
     passport.use(new FacebookStrategy({
         clientID: "1134705303953172",
         clientSecret: "ce132e835a87e89876174c35bd6d492e",
-        callbackURL: "https://sneakerjeep.herokuapp.com/auth/facebook/callback",
+        callbackURL: "https://sneaker-jeeps-customer.herokuapp.com/auth/facebook/callback",
         profileFields   : ['id','displayName','email']
       },
       function(accessToken, refreshToken, profile, cb) {

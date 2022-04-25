@@ -233,7 +233,7 @@ router.get('/facebook',
 router.get('/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/login' }),
   function (req, res) {
-    res.redirect('/home');
+    res.redirect('/');
   });
 
 router.get('/api/check-email-exist/:email', function (req, res, next) {
