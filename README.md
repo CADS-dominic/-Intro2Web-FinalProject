@@ -19,3 +19,4 @@
 ## III. Checkout website
 
 - _https://sneaker-jeeps-admin.herokuapp.com_
+- _https://sneaker-jeeps-customer.herokuapp.com_
