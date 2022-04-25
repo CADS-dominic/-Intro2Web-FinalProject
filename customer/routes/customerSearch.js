@@ -48,16 +48,18 @@ router.post('/:value', async (req, res, next) => {
   let filterResult = result.map((doc) => {
     if (!bestSeller && !newProduct)
     {
-      return doc;
+      if (Number(doc.price) >= minPrice && Number(doc.price) <= maxPrice) {
+        return doc;
+      }
     }
 
     if (doc.category == bestSeller) {
-      if (doc.price >= minPrice && doc.price <= maxPrice) {
+      if (Number(doc.price) >= minPrice && Number(doc.price) <= maxPrice) {
         return doc;
       }
     }
     if (doc.category == newProduct) {
-      if (doc.price >= minPrice && doc.price <= maxPrice) {
+      if (Number(doc.price) >= minPrice && Number(doc.price) <= maxPrice) {
         return doc;
       }
     }
